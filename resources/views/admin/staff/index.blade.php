@@ -21,8 +21,7 @@
                 <tr class="bg-gray-200">
                     <td class="text-center font-semibold py-2 w-16">SN</td>
                     <td class="font-semibold py-2">Staff No</td>
-                    <td class="font-semibold py-2">Full name</td>
-                    <td class="font-semibold py-2">College</td>
+                    <td class="font-semibold py-2">Full name</td>                    
                     <td class="font-semibold py-2">Department</td>
                     <td class="font-semibold py-2 text-center">Action</td>
                 </tr>
@@ -34,9 +33,9 @@
                         @foreach ($staffs as $staff)
                             <tr class="border border-b border-gray-200 ">
                                 <td class='text-center py-4'>{{ ++$counter }}.</td>
-                                <td>{{ $staff->staff_no }}</td>
+                                <td>{{ $staff->fileno }}</td>
                                 <td>{{ $staff->surname }} {{ $staff->firstname }} {{ $staff->middlename }}</td>
-                                <td>{{ $staff->college->college_code }}</td>
+
                                 <td>{{ $staff->department->department_code }}</td>
                                 <td class="text-center">
                                     <span class="text-sm">

@@ -9,10 +9,9 @@ class Staff extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-        'college_id',
+    protected $fillable = [        
         'department_id',
-        'staff_no',
+        'fileno',
         'title',
         'surname',
         'firstname',
@@ -20,8 +19,8 @@ class Staff extends Model
     ];
 
 
-    public function college(){
-        return $this->belongsTo(College::class, 'college_id', 'id');
+    public function ministry(){
+        return $this->belongsTo(Ministry::class, 'ministry_id', 'id');
     }
 
     public function department(){

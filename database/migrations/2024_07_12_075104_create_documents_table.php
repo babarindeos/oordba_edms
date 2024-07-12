@@ -11,15 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('staff', function (Blueprint $table) {
+        Schema::create('documents', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('college_id');
-            $table->unsignedBigInteger('department_id');
-            $table->string('staff_no');
-            $table->string('title');
-            $table->string('surname');
-            $table->string('firstname');
-            $table->string('middlename');
             $table->timestamps();
         });
     }
@@ -29,6 +22,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('staff');
+        Schema::dropIfExists('documents');
     }
 };

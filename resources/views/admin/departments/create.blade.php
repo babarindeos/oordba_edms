@@ -5,7 +5,7 @@
             
             <div class="flex border-b border-gray-300 py-2 justify-between">
                     <div >
-                        <h1 class="text-2xl font-semibold font-serif text-gray-800">Create Department</h1>
+                        <h1 class="text-2xl font-semibold font-serif text-gray-800">Create Department or Agency</h1>
                     </div>                
             </div>
             
@@ -23,8 +23,8 @@
                         
 
                         <div class="flex flex-col w-[80%] md:w-[60%] py-2 md:py-4" style="font-family:'Lato'; font-size:18px; font-weight:400;">
-                            <h2 class="font-semibold text-xl py-1" >New Department</h2>
-                            Select College and Provide Department long and short names
+                            <h2 class="font-semibold text-xl py-1" >New Department or Agency</h2>
+                            Select Ministry and Provide Department or Agency long and short names
                         </div>
 
 
@@ -35,24 +35,23 @@
                         <div class="flex flex-col border-red-900 w-[80%] md:w-[60%] py-2">
                                 
                                 
-                            <select name="college" class="border border-1 border-gray-400 bg-gray-50
+                            <select name="ministry" class="border border-1 border-gray-400 bg-gray-50
                                                                      w-full p-4 rounded-md 
                                                                      focus:outline-none
                                                                      focus:border-blue-500 
                                                                      focus:ring
-                                                                     focus:ring-blue-100"
-                                                                     
+                                                                     focus:ring-blue-100"                                                                                                                                                                                                                                                                                                                                                
                                                                      
                                                                      style="font-family:'Lato';font-size:16px;font-weight:500;"
                                                                      required
                                                                      >
-                                                                    <option value=''>-- Select College --</option>
-                                                                        @foreach($colleges as $college)
-                                                                            <option class='py-4' value="{{$college->id}}">{{$college->college_name}} ({{$college->college_code}})</option>
+                                                                    <option value=''>-- Select Ministry --</option>
+                                                                        @foreach($ministries as $ministry)
+                                                                            <option class='py-4' value="{{$ministry->id}}">{{$ministry->name}} ({{$ministry->code}})</option>
                                                                         @endforeach                                                                    
                                                                     </select>
 
-                                                                     @error('college')
+                                                                     @error('ministry')
                                                                         <span class="text-red-700 text-sm">
                                                                             {{$message}}
                                                                         </span>
@@ -60,7 +59,7 @@
                             
                         </div>
                         
-                        <!-- end of College //-->
+                        <!-- end of Ministry //-->
 
                         
                         
@@ -74,7 +73,7 @@
                                                                     focus:outline-none
                                                                     focus:border-blue-500 
                                                                     focus:ring
-                                                                    focus:ring-blue-100" placeholder="Department full name"
+                                                                    focus:ring-blue-100" placeholder="Department or Agency full name"
                                                                     
                                                                     value="{{ old('department_name') }}"
                                                                     
@@ -100,7 +99,7 @@
                                                                     focus:outline-none
                                                                     focus:border-blue-500 
                                                                     focus:ring
-                                                                    focus:ring-blue-100" placeholder="Department code"
+                                                                    focus:ring-blue-100" placeholder="Department or Agency code"
                                                                     
                                                                     value="{{ old('department_code') }}"
                                                                     
@@ -120,7 +119,7 @@
                         <div class="flex flex-col border-red-900 w-[80%] md:w-[60%] mt-4">
                             <button type="submit" class="border border-1 bg-gray-400 py-4 text-white 
                                            hover:bg-gray-500
-                                           rounded-md text-lg" style="font-family:'Lato';font-weight:500;">Create Department</button>
+                                           rounded-md text-lg" style="font-family:'Lato';font-weight:500;">Create Department or Agency</button>
                         </div>
                         
                     </form><!-- end of new department form //-->

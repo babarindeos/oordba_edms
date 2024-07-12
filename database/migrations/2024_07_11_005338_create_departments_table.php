@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('departments', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('college_id');            
+            $table->unsignedBigInteger('ministry_id');
             $table->string('department_name')->unique();
             $table->string('department_code')->unique();
             $table->timestamps();
-            $table->foreign('college_id')->references('id')->on('colleges')->onDelete('cascade');
+
+            $table->foreign('ministry_id')->references('id')->on('ministries')->onDelete('cascade');
         });
     }
 
@@ -26,10 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('departments', function(Blueprint $table){
-            $table->dropForeign(['college_id']);
-        });
-
         Schema::dropIfExists('departments');
     }
 };

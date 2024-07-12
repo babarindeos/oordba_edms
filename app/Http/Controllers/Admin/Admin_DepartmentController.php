@@ -7,28 +7,31 @@ use Illuminate\Http\Request;
 
 use App\Models\College;
 use App\Models\Department;
+use App\Models\Ministry;
 
 class Admin_DepartmentController extends Controller
 {
     //
     public function index(){
-        $departments = Department::orderBy('department_name', 'asc')->get();
+        $departments = Department::orderBy('department_name', 'asc')->paginate(2);
         return view('admin.departments.index', compact('departments'));
     }
 
     public function create(){
-        $colleges = College::orderBy('college_name', 'asc')->get();
-        return view('admin.departments.create', compact('colleges'));
+        
+        $ministries = Ministry::orderBy('name', 'asc')->get();
+        return view('admin.departments.create', compact('ministries'));
     }
 
     public function store(Request $request){
+        
         $formFields = $request->validate([
-            'college' => 'required',
+            'ministry' => 'required',
             'department_name' => 'required | string',
             'department_code' => ['required', 'string']
         ]);
 
-        $formFields['college_id'] = $formFields['college'];
+        $formFields['ministry_id'] = $formFields['ministry'];
 
         try{
             $create = Department::create($formFields);
@@ -37,13 +40,13 @@ class Admin_DepartmentController extends Controller
                 $data = [
                     'error' => true,
                     'status' => 'success',
-                    'message' => 'The Department has been successfully created'
+                    'message' => 'The Department or Agency has been successfully created'
                 ];
             }else{
                 $data = [
                     'error' => true,
                     'status' => 'fail',
-                    'message' => 'An error occurred creating the Department'
+                    'message' => 'An error occurred creating the Department or Agency'
                 ];
             }
     
@@ -52,7 +55,7 @@ class Admin_DepartmentController extends Controller
             $data = [
                     'error' => true,
                     'status' => 'fail',
-                    'message' => 'An error occurred creating the Department '.$e->getMessage()
+                    'message' => 'An error occurred creating the Department or Agency'.$e->getMessage()
             ];
         }
         
@@ -64,33 +67,36 @@ class Admin_DepartmentController extends Controller
 
 
     public function edit(Department $department){
-        $colleges = College::orderBy('college_name', 'asc')->get();
+        //$colleges = College::orderBy('college_name', 'asc')->get();
+        $ministries = Ministry::orderBy('name', 'asc')->get();
         
 
-        return view('admin.departments.edit', compact('colleges', 'department'));
+        return view('admin.departments.edit', compact('ministries', 'department'));
     }
 
     public function update(Request $request, Department $department){
         $formFields = $request->validate([
-            'college' => 'required',
+            'ministry' => 'required',
             'department_name' => ['required', 'string'],
             'department_code' => 'required | string'
         ]);
 
-        $update = $department->update($formFields);
+        $formFields['ministry_id'] = $formFields['ministry'];
 
         try{
+            $update = $department->update($formFields);
+
             if ($update){
                 $data = [
                     'error' => true,
                     'status' => 'success',
-                    'message' => 'The department has been successfully updated'
+                    'message' => 'The Department or Agency has been successfully updated'
                 ];
             }else{
                 $data = [
                     'error' => true,
                     'status' => 'fail',
-                    'message' => 'An error occurred updating the department'
+                    'message' => 'An error occurred updating the Department or Agency'
                 ];
             }
         }catch(\Exception $e){

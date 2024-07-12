@@ -32,36 +32,7 @@
                         
                         
 
-                         <!-- College //-->
-                         <div class="flex flex-col border-red-900 w-[80%] md:w-[60%] py-2">
-                                
-                                
-                            <select name="college" class="border border-1 border-gray-400 bg-gray-50
-                                                                     w-full p-4 rounded-md 
-                                                                     focus:outline-none
-                                                                     focus:border-blue-500 
-                                                                     focus:ring
-                                                                     focus:ring-blue-100"
-                                                                     
-                                                                     
-                                                                     style="font-family:'Lato';font-size:16px;font-weight:500;"
-                                                                     required
-                                                                     >
-                                                                    <option value=''>-- Select College --</option>
-                                                                        @foreach($colleges as $college)
-                                                                            <option class='py-4' @if ($college->id== $staff->college_id) selected @endif value="{{$college->id}}">{{$college->college_name}} ({{$college->college_code}})</option>
-                                                                        @endforeach                                                                    
-                                                                    </select>
-
-                                                                     @error('college')
-                                                                        <span class="text-red-700 text-sm">
-                                                                            {{$message}}
-                                                                        </span>
-                                                                     @enderror
-                            
-                        </div>                        
-                        <!-- end of College name //-->
-
+                         
 
 
                         <!-- Department //-->
@@ -132,21 +103,21 @@
                         <div class="flex flex-col border-red-900 w-[80%] md:w-[60%] py-3">
                         
                             
-                            <input type="text" name="staff_no" class="border border-1 border-gray-400 bg-gray-50
+                            <input type="text" name="fileno" class="border border-1 border-gray-400 bg-gray-50
                                                                     w-full p-4 rounded-md 
                                                                     focus:outline-none
                                                                     focus:border-blue-500 
                                                                     focus:ring
                                                                     focus:ring-blue-100" placeholder="Staff No."
                                                                     
-                                                                    value="{{ $staff->staff_no }}"
+                                                                    value="{{ $staff->fileno }}"
                                                                     
                                                                     style="font-family:'Lato';font-size:16px;font-weight:500;"                                                                     
                                                                     required
                                                                     />  
                                                                                                                                         
 
-                                                                    @error('staff_no')
+                                                                    @error('fileno')
                                                                         <span class="text-red-700 text-sm">
                                                                             {{$message}}
                                                                         </span>

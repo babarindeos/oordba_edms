@@ -4,7 +4,7 @@
         
             <!-- left side //-->
             <div class="hidden md:flex w-1/5 bg-green-100" 
-                style="background-image:url('{{asset('images/goviflow.jpg')}}'); 
+                style="background-image:url('{{asset('images/goviflow_low.jpg')}}'); 
                 background-size: cover; 
                 background-repeat: repeat
                 background-position: right; background-color:#f1f1f1;"

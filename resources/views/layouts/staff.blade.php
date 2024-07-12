@@ -16,7 +16,7 @@
     </head>
     <body class="font-sans text-gray-900 antialiased flex flex-col min-h-screen">
         <header>
-            @include('partials._header_admin')
+            @include('partials._header_staff')
         </header>
         <main class="flex flex-grow">
             {{ $slot }}

@@ -8,7 +8,7 @@
                         <h1 class="text-2xl font-semibold font-serif text-gray-800">Ministries</h1>
                     </div>
                     <div>
-                            <a href="{{ route('admin.colleges.create') }}" class="bg-green-600 text-white py-2 px-4 
+                            <a href="{{ route('admin.ministries.create') }}" class="bg-green-600 text-white py-2 px-4 
                                             rounded-lg text-sm hover:bg-green-500">New Ministry</a>
                     </div>
             </div>
@@ -26,12 +26,34 @@
                 </tr>
                 <tbody>
                     @php
-                        $counter = 0;
+                        $counter = ($ministries->currentPage() -1) * $ministries->perPage();
                     @endphp
                     
+                    @foreach($ministries as $ministry)
+                        <tr class="border border-b border-gray-200 ">
+                            <td class='text-center py-4'>{{ ++$counter }}.</td>
+                            <td>{{ $ministry->name }}</td>
+                            <td> {{ $ministry->code }}</td>
+                            <td class="text-center">
+                                <span class="text-sm">
+                                    <a class="hover:bg-blue-500 bg-blue-400 text-white rounded-md 
+                                              px-4 py-1 text-xs" href="{{ route('admin.ministries.edit', ['ministry'=>$ministry->id])}}">Edit</a>
+                                </span>
+                                <span> 
+                                    <a class="hover:bg-red-500 bg-red-400 text-white rounded-md 
+                                              px-4 py-1 text-xs" href="{{ route('admin.ministries.destroy', ['ministry'=>$ministry->id])}}"
+                                    href=''>Delete</a>
+                                </span>
+                            </td>
+                        </tr>
+                    @endforeach
                 </tbody>
 
             </table>
+
+            <div class="py-2">
+                    {{ $ministries->links() }}
+            </div>
 
 
         </section>
