@@ -1,0 +1,16 @@
+<section class="flex flex-col md:flex-row md:space-x-4">
+    <a href="{{ route('staff.documents.mydocuments') }}" class="border border-green-600 py-2 px-4 rounded-md mt-1 font-semibold 
+                hover:bg-green-600 hover:text-white hover:shadow-md">
+            My Documents
+    </a>
+
+    <div class="border border-green-600 py-2 px-4 rounded-md mt-1 font-semibold 
+                    hover:bg-green-600 hover:text-white hover:shadow-md">
+            Track Documents
+    </div>
+
+    <a href="{{ route('staff.documents.create') }}" class="border border-green-600 py-2 px-4 rounded-md mt-1 font-semibold 
+                     hover:bg-green-600 hover:text-white hover:shadow-md">
+        Upload Document
+    </a>
+</section>

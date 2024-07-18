@@ -61,7 +61,7 @@ class Admin_StaffController extends Controller
             $data = [
                 'error' => true,
                 'status' => 'fail',
-                'message' => 'A Staff with the Staff No already exist'
+                'message' => 'A Staff with the Staff No. already exist'
             ];
 
 
@@ -76,43 +76,75 @@ class Admin_StaffController extends Controller
         $formFields['department_id'] = $request->input('department');
 
         try{
-            $create = Staff::create($formFields);
+            
+            // create user login for the user
+            /* $user = new User();
+            $user->fileno = $formFields['fileno'];
+            $user->surname = $formFields['surname'];
+            $user->firstname = $formFields['firstname'];
+            $user->middlename = $formFields['middlename'];
+            $user->email = $formFields['email'];
+            $user->password = bcrypt($password);
+            $user->role = "staff";
+            $user->save(); */
 
-            if ($create){
-                $data = [
-                    'error' => true,
-                    'status' => 'success',
-                    'message' => 'The Staff has been successfully created'
-                ];
+            $userData = [
+                'surname' => $formFields['surname'],
+                'firstname' => $formFields['firstname'],
+                'middlename' => $formFields['middlename'],
+                'email' => $formFields['email'],
+                'password' => bcrypt($password),
+                'role' => 'staff'
+            ];
 
-                // create user login for the user
-                $user = new User();
-                $user->fileno = $formFields['fileno'];
-                $user->surname = $formFields['surname'];
-                $user->firstname = $formFields['firstname'];
-                $user->middlename = $formFields['middlename'];
-                $user->email = $formFields['email'];
-                $user->password = bcrypt($password);
-                $user->role = "staff";
+            $createUser = User::create($userData);
 
-                $user->save();
+            
 
-                // send email
-                $fullname = $formFields['surname'].' '.$formFields['firstname'];
-                $username = $formFields['email'];
-                $recipient = $fullname;
-                $recipient_email = $formFields['email'];
 
-                $payload = array("fullname"=>$fullname, "username"=>$username, "password"=>$password);
+            if ($createUser){                      
 
                 try{
-                    Mail::send('emails.onboarding', $payload, function($message) use($recipient_email, $recipient){
-                        $message->to($recipient_email, $recipient)
-                                ->subject("Welcome to Ogun State Workflow");
-                        $message->from("clearanceinfo@funaab.edu.ng", "GoviFlow");
-                                
-                    });
-    
+
+                    $formFields['user_id'] = $createUser->id;
+
+                    $createStaff = Staff::create($formFields);
+
+                    if ($createStaff)
+                    {
+                            $data = [
+                                'error' => true,
+                                'status' => 'success',
+                                'message' => 'The Staff has been successfully created'
+                            ];         
+
+
+                            // send email
+                            $fullname = $formFields['surname'].' '.$formFields['firstname'];
+                            $username = $formFields['email'];
+                            $recipient = $fullname;
+                            $recipient_email = $formFields['email'];
+
+                            $payload = array("fullname"=>$fullname, "username"=>$username, "password"=>$password);
+
+                            
+                            Mail::send('emails.onboarding', $payload, function($message) use($recipient_email, $recipient){
+                                $message->to($recipient_email, $recipient)
+                                        ->subject("Welcome to Ogun State Workflow");
+                                $message->from("clearanceinfo@funaab.edu.ng", "GoviFlow");
+                                        
+                            });        
+                    }
+                    else
+                    {
+                        $data = [
+                            'error' => true,
+                            'status' => 'success',
+                            'message' => 'An error occurred createing the Staff'
+                        ];         
+                    }
+
+                    
     
                 }catch(\Exception $e){
                     dd($e->getMessage());
@@ -122,7 +154,7 @@ class Admin_StaffController extends Controller
                 $data = [
                     'error' => true,
                     'status' => 'fail',
-                    'message' => 'An error occurred creating the Staff'
+                    'message' => 'An error occurred creating the Staff Account'
                 ];
             }
         }catch(\Exception $e){

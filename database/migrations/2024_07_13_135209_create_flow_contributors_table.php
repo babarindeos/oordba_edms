@@ -11,17 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('staff', function (Blueprint $table) {
+        Schema::create('flow_contributors', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('doc_id');
+            $table->foreign('doc_id')->references('id')->on('documents')->onDelete('cascade');            
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->unsignedBigInteger('department_id');
-            $table->foreign('department_id')->references('id')->on('departments')->onDelete('cascade');           
-            $table->string('fileno')->unique();
-            $table->string('title');
-            $table->string('surname');
-            $table->string('firstname');
-            $table->string('middlename');
+            $table->unsignedBigInteger('added_by');
+            $table->foreign('added_by')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -31,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('staff');
+        Schema::dropIfExists('flow_contributors');
     }
 };

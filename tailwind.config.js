@@ -16,6 +16,13 @@ export default {
                 seyi: ['Inter', 'sans-serif'],
                 serif: ['Lato', 'serif'],
             },
+            width: {
+                '3/5': '60%', // 3/5 equals 60%
+                '2/5': '40%'
+              },
+            spacing: {
+                '12': '3rem'
+            },
         },
     },
 

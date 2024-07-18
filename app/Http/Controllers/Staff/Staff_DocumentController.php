@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Classes\Document;
+use Illuminate\Support\Str;
+use App\Models\Document as DocumentModel;
+use App\Models\Workflow;
+
 
 class Staff_DocumentController extends Controller
 {
@@ -22,6 +26,7 @@ class Staff_DocumentController extends Controller
         return view('staff.documents.create');
     }
 
+    
     public function store(Request $request)
     {
         $formFields = $request->validate([
@@ -29,6 +34,12 @@ class Staff_DocumentController extends Controller
             'document' => 'required|file|mimes:pdf,doc,docx,jpg,jpeg,png',
             'comment' => 'string|max:140'
         ]);
+
+
+        $document = '';
+        $new_filename = '';
+        $document_size = '';
+        $document_type = '';
 
         if ($request->hasFile('document'))
         {
@@ -50,14 +61,87 @@ class Staff_DocumentController extends Controller
             $new_filename = $filename.$document_file->getClientOriginalExtension();
 
             $document_file->storeAs('documents', $new_filename);
-
-
-
-
-            dd($new_filename);
-
-
             
         }
+
+
+        $uuid = Str::uuid();
+
+            $store_data = [
+                'uuid' => $uuid,
+                'title' => $formFields['document_title'],
+                'document' => 'documents/'.$new_filename,
+                'comment' => $formFields['comment'],
+                'uploader' => auth()->user()->id,
+                'filesize' => $document_size,
+                'filetype' => $document_type
+            ];
+
+            try
+            {
+                $create = DocumentModel::create($store_data);
+
+                if ($create)
+                {
+                    $data = [
+                        'error' => true,
+                        'status' => 'success',
+                        'message' => 'Document has been successfully submitted'
+                    ];
+                }
+                else
+                {
+                    $data = [
+                        'error' => true,
+                        'status' => 'fail',
+                        'message' => 'An error occurred submitting the document'
+                    ];
+                }
+            }
+            catch(\Exception $e)
+            {
+                $data = [
+                    'error' => true,
+                    'status' => 'fail',
+                    'message' => 'An error occurred submitting the document: '.$e->getMessage()
+                ];
+            }
+
+
+
+            return redirect()->back()->with($data);
+
+
+
+
     }
+
+    public function show($document)
+    {
+        $document = DocumentModel::where('uploader', auth()->user()->id)
+                                    ->where('id', $document)->first();
+        
+        $workflowCount = Workflow::where('doc_id', $document)->count();        
+        
+        if ($document == null)
+        {
+            return redirect()->route('staff.documents.mydocuments');
+        }
+        
+        return view('staff.documents.show', compact('document', 'workflowCount'));
+    }
+
+    public function mydocuments()
+    {
+        $my_user_id = auth()->user()->id;
+        $mydocuments = DocumentModel::where('uploader', $my_user_id)->paginate(2);
+        return view('staff.documents.my_documents')->with('documents', $mydocuments);
+    }
+
+
+
+
+
+
+
 }

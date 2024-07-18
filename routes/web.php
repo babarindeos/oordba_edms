@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\Admin_MinistryController;
 use App\Http\Controllers\Staff\Staff_AuthController;
 use App\Http\Controllers\Staff\Staff_DashboardController;
 use App\Http\Controllers\Staff\Staff_DocumentController;
+use App\Http\Controllers\Staff\Staff_WorkflowController;
 
 
 /*
@@ -47,7 +48,16 @@ Route::prefix('staff')->middleware(['auth', 'staff'])->group(function(){
     Route::get('/documents', [Staff_DocumentController::class, 'index'])->name('staff.document.index');
     Route::get('/documents/create', [Staff_DocumentController::class, 'create'])->name('staff.documents.create');
     Route::post('/documents/store', [Staff_DocumentController::class, 'store'])->name('staff.documents.store');
+    
+    Route::get('/documents/{document}/show', [Staff_DocumentController::class, 'show'])->name('staff.documents.show');
+    Route::get('/documents/mydocuments', [Staff_DocumentController::class, 'mydocuments'])->name('staff.documents.mydocuments');
+    
+    
+    Route::get('/workflows/{document}/flow', [Staff_WorkflowController::class, 'flow'])->name('staff.workflows.flow');
+    Route::get('/workflows/{document}/add_contributor',[Staff_WorkflowController::class, 'add_contributor'])->name('staff.workflows.add_contributor');
+    Route::post('/workflows/{document}/post_add_contributor', [Staff_WorkflowController::class, 'post_add_contributor'])->name('staff.workflows.post_add_contributor');
 
+    Route::post('/workflows/{document}/search_staff', [Staff_WorkflowController::class, 'search_staff'])->name('staff.workflows.search_staff');
 });
 
 

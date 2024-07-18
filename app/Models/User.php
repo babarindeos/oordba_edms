@@ -17,8 +17,7 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'fileno',
+    protected $fillable = [        
         'surname',
         'firstname',
         'middlename',
@@ -45,4 +44,9 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function staff()
+    {
+        return $this->hasOne(Staff::class);
+    }
 }
