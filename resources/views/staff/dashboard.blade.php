@@ -12,25 +12,112 @@
             </div>
     </section>
 
-    <section class="flex flex-col md:flex-row md:space-x-4">
-        <div class="border border-green-600 py-2 px-4 rounded-md mt-1 font-semibold hover:bg-green-600 hover:text-white ">
-                My Documents
-        </div>
+    @include('partials._document_submenu1')
 
-        <div class="border border-green-600 py-2 px-4 rounded-md mt-1 font-semibold hover:bg-green-600 hover:text-white">
-                Track Documents
+
+    <div class="flex flex-col md:flex-row space-x-4">
+        
+
+        @if (count($workflow_notifications) > 0 )
+        <div class="md:w-[50%]">
+            <section class="py-8 mt-2">
+                    <div class="text-lg font-semibold text-gray-600 border-b border-gray-200 ">
+                        Workflow Notifications ({{ $workflow_notifications->count() }})
+                    </div>
+                    <div>
+                        <ul class="list-disc px-10">
+                            @foreach ($workflow_notifications as $notification)
+                                <li class="py-3 border-b border-gray-100">
+                                    <a title="{{ $notification->document->title }}" class="hover:underline" href="{{ route('staff.workflows.notification_update', ['workflow'=>$notification->id])}}" >
+                                    
+                                        <div class="font-medium text-gray-700">
+                                            {{$notification->document->title}}
+                                        </div>
+                                        <div class="text-xs">
+                                            from {{ $notification->sender->surname}} @ 
+                                            {{ $notification->created_at->format('l jS F, Y g:i a')}}
+                                        </div>
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                        <div class="py-2">
+                                {{ $workflow_notifications->links() }}
+                        </div>
+
+                    </div>
+            </section>
         </div>
-    </section>
+        @endif
+
+        
+
+        
+        @if (count($private_message_notifications) > 0 )
+        <div>
+            <section class="py-8 mt-2">
+                    <div class="text-lg font-semibold text-gray-600 border-b border-gray-200 ">
+                        Message Notifications ({{ $private_message_notifications->count() }})
+                    </div>
+                    <div>
+                        <ul class="list-disc px-10">
+                            @foreach ($private_message_notifications as $notification)
+                                <li class="py-3 border-b border-gray-100">
+                                    <a title="{{ $notification->message }}" class="hover:underline"  >
+                                    
+                                        <div class="font-medium text-gray-700">
+                                            {{$notification->message}}
+                                        </div>
+                                        <div class="text-xs">
+                                            from {{ $notification->sender->surname}} @ 
+                                            {{ $notification->created_at->format('l jS F, Y g:i a')}}
+                                        </div>
+                                    </a>
+                                </li>
+                            @endforeach
+                        </ul>
+                        <div class="py-2">
+                                {{ $workflow_notifications->links() }}
+                        </div>
+
+                    </div>
+            </section>
+        </div>
+        @endif
+
+        
+
+    </div>
+
 
     <section class="py-8 mt-2">
             <div class="text-lg font-semibold text-gray-600 border-b border-gray-200 ">
-                 Notifications
+                Recent Workflows
             </div>
-    </section>
-    <section class="py-8 mt-2">
-            <div class="text-lg font-semibold text-gray-600 border-b border-gray-200 ">
-                Recent Documents
-            </div>
+            <div>
+                <ul class="list-disc  px-10">
+                   @foreach ($recent_workflows as $workflow)
+                        @if ($workflow->sender_id != Auth::user()->id)
+                            <li class="py-3 border-b border-gray-100">
+                                <a title="{{$workflow->document->title}}" class="hover:underline" href="{{ route('staff.workflows.flow', ['document'=>$workflow->document->id]) }}" >
+                                
+                                        <div class="font-medium text-gray-700">
+                                        {{$workflow->document->title}}
+                                        </div>
+                                        <div class="text-xs">
+                                            from {{ $workflow->sender->surname}} @ 
+                                            {{ $workflow->created_at->format('l jS F, Y g:i a')}}
+                                        </div>
+                                </a>
+                            </li>
+                        @endif
+                   @endforeach
+                </ul>
+                <div class="py-2">
+                       {{ $workflow_notifications->links() }}
+                </div>
+
+           </div>
     </section>
     
 </div>

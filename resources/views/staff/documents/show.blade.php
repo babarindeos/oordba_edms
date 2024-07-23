@@ -74,7 +74,14 @@
                                                                     
                                                                 </span>
                                                         @else
-                                                                Workflow
+                                                                <span class="border border-1 
+                                                                                py-1 px-4 text-sm rounded-md
+                                                                                bg-green-500 text-white border-green-500">
+                                                                        <a href="{{ route('staff.workflows.flow', ["document"=>$document->id])}}">
+                                                                                Workflow
+                                                                        </a>
+                                                                
+                                                                </span>
                                                         @endif
                                                 </div>
                                         </div>
@@ -87,6 +94,24 @@
                     <div class="w-full md:w-2/5 md:flex-grow border border-1 py-4 px-4 rounded-md">
                             <div class="font-semibold text-gray-500">
                                     Workflow Participants
+                            </div>
+
+                            <div class="w-full mt-2">
+                                @foreach($workflow_contributors as $contributor)
+                                    <div class="w-full py-1">
+                                            <div class="flex flex-row w-full text-sm border-b ">
+                                                    <div class="flex flex-col justify-center px-2 py-2 items-center">
+                                                            <img class="w-12" src="{{ asset('images/avatar_64.jpg')}}" />                                                                
+                                                    </div>
+                                                    <div class="flex flex-col py-2 w-full">
+                                                        <div class="font-bold">{{ $contributor->user->staff->surname}}  {{ $contributor->user->staff->firstname}}</div>
+                                                        <div>{{ $contributor->user->staff->department->department_name}}  ({{ $contributor->user->staff->department->department_code}})</div>
+                                                        <div>{{ $contributor->user->staff->department->ministry->name}} ({{ $contributor->user->staff->department->ministry->code}})</div>
+                                                        
+                                                    </div>
+                                            </div>
+                                    </div>
+                                @endforeach
                             </div>
                     </div>
                     <!-- end of right panel //-->

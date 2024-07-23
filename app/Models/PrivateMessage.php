@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Workflow extends Model
+class PrivateMessage extends Model
 {
     use HasFactory;
 
@@ -13,9 +13,9 @@ class Workflow extends Model
         'doc_id',
         'sender_id',
         'recipient_id',
-        'status',
-        'comment',
-        'read'
+        'chat_users_id',
+        'chat_uuid',
+        'message'
     ];
 
     public function document()

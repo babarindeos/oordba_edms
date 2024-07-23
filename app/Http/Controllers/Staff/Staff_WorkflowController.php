@@ -9,14 +9,29 @@ use App\Models\Staff;
 use App\Models\Department;
 use Illuminate\Support\Facades\Auth;
 use App\Models\FlowContributor;
+use App\Models\Workflow;
+use App\Http\Classes\WorkflowClass;
+use App\Models\PrivateMessage;
 
 class Staff_WorkflowController extends Controller
 {
     //
     public function flow(Document $document)
-    {
+    {   
+        $current_document_handler = WorkflowClass::getCurrentDocumentHandler($document);
+        $current_handler =$current_document_handler;
+
+        $workflow_contributors = FlowContributor::where('doc_id', $document->id)->get();
+
+        $workflow_transactions = Workflow::where('doc_id', $document->id)->get();
+
+        // get private message for the authenticated user
+        $my_private_messages = PrivateMessage::where('doc_id', $document->id)
+                                              ->where('recipient_id', auth()->user()->id)
+                                              ->where('read', false)->get();
         
-        return view('staff.workflows.flow', compact('document'));
+
+        return view('staff.workflows.flow', compact('document', 'workflow_contributors', 'current_handler', 'workflow_transactions', 'my_private_messages'));
     }
 
     public function add_contributor(Document $document)
@@ -108,13 +123,72 @@ class Staff_WorkflowController extends Controller
 
              $staff = null;
              return redirect()->back()->with($data);
-         }
-
-         
-         
+         }         
                  
          return redirect()->back()->with(['error'=>false, 'status'=>'success', 'staff' => $staff]);
          //return view('staff.workflows.add_contributor', compact('document','staff'))->with(['error'=>false, 'status'=>'success']);
          
     }
+
+    public function forward_document(Request $request, Document $document)
+    {
+        
+        $formFields = $request->validate([
+            'contributor' => ['required'],
+            'status' => ['required'],
+            'comment' => ['required']
+        ]);
+
+        
+        
+
+        try
+        {
+           
+            $workflow_data = [
+                'doc_id' => $document->id,
+                'sender_id' => auth()->user()->id,
+                'recipient_id' => $formFields['contributor'],
+                'status' => $formFields['status'],
+                'comment' => $formFields['comment']
+            ];            
+
+            $forward = Workflow::create($workflow_data);
+
+            return redirect()->back();
+
+        }
+        catch(\Exception $e)
+        {
+            $data = [
+                'error' => true,
+                'status' => 'fail',
+                'message' => 'An error occurred forwarding the document: '.$e->getMessage()
+            ];
+
+            return redirect()->back()->with($data);
+        }
+
+        
+    }
+
+
+    public function notification_update(Workflow $workflow)
+    {
+        if ($workflow->read == 0)
+        {
+            $read_status_update = WorkflowClass::updateReadStatus($workflow);
+        }
+
+        // // get current document handler
+        // $current_document_handler = getCurrentDocumentHandler($document);
+        // $current_handler = $current_document_handler;
+
+        // // get workflow contributors
+        // $workflow_contributors = FlowContributor::where('doc_id', $document->id)->get();
+
+        return redirect()->route('staff.workflows.flow',["document"=>$workflow->doc_id]);
+    }
+
+    
 }

@@ -10,6 +10,7 @@ use App\Http\Classes\Document;
 use Illuminate\Support\Str;
 use App\Models\Document as DocumentModel;
 use App\Models\Workflow;
+use App\Models\FlowContributor;
 
 
 class Staff_DocumentController extends Controller
@@ -121,20 +122,22 @@ class Staff_DocumentController extends Controller
         $document = DocumentModel::where('uploader', auth()->user()->id)
                                     ->where('id', $document)->first();
         
-        $workflowCount = Workflow::where('doc_id', $document)->count();        
+        $workflowCount = Workflow::where('doc_id', $document->id)->count();  
+        
+        $workflow_contributors = FlowContributor::where('doc_id', $document->id)->get();
         
         if ($document == null)
         {
             return redirect()->route('staff.documents.mydocuments');
         }
         
-        return view('staff.documents.show', compact('document', 'workflowCount'));
+        return view('staff.documents.show', compact('document', 'workflowCount', 'workflow_contributors'));
     }
 
     public function mydocuments()
     {
         $my_user_id = auth()->user()->id;
-        $mydocuments = DocumentModel::where('uploader', $my_user_id)->paginate(2);
+        $mydocuments = DocumentModel::where('uploader', $my_user_id)->orderBy('id', 'desc')->paginate(2);
         return view('staff.documents.my_documents')->with('documents', $mydocuments);
     }
 

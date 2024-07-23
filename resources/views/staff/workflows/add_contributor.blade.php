@@ -147,7 +147,7 @@
                                                                                                     <form action="{{ route('staff.workflows.post_add_contributor',['document'=>$document->id]) }}" method="POST">
                                                                                                         @csrf
                                                                                                         <div class="mt-2">
-                                                                                                            <input type="text" name='user_id' value="{{$staff->user_id}}" />
+                                                                                                            <input type="hidden" name='user_id' value="{{$staff->user_id}}" />
                                                                                                             <button type="submit" class="border border-1 border-green-500
                                                                                                             bg-green-500 text-white rounded-md py-2 px-4 text-xs font-semibold">
                                                                                                                 Add as Contributor
@@ -205,27 +205,28 @@
                                     Workflow Contributors
                             </div>
 
-                            <div class="w-full">
+                            <div class="w-full ">
                                     @foreach($workflow_contributors as $contributor)
-                                        <div class="flex flex-row w-full text-sm border-b ">
-                                                <div class="flex flex-col justify-center px-2 py-2 items-center">
-                                                        <img class="w-12" src="{{ asset('images/avatar_64.jpg')}}" />
-                                                        
-                                                </div>
-                                                <div class="flex flex-col py-2  ">
-                                                    <div class="font-bold">{{ $contributor->user->staff->surname}}  {{ $contributor->user->staff->firstname}}</div>
-                                                    <div>{{ $contributor->user->staff->department->department_name}}  {{ $contributor->user->staff->department->department_code}}</div>
-                                                    <div>{{ $contributor->user->staff->department->ministry->name}}</div>
-                                                    <div>
-                                                        @if (Auth::user()->id == $contributor->add_initiator->id)
-                                                            <div class="flex text-end justify-end "> 
-                                                                <a class="flex text-xs bg-red-300 px-2 py-1 text-white rounded-md hover:bg-red-400">   
-                                                                    Delete
-                                                                </a>
+                                        <div class="w-full ">
+                                                <div class="flex flex-row w-full text-sm border-b ">
+                                                        <div class="flex flex-col justify-center px-2 py-2 items-center">
+                                                                <img class="w-12" src="{{ asset('images/avatar_64.jpg')}}" />                                                                
+                                                        </div>
+                                                        <div class="flex flex-col py-2 w-full">
+                                                            <div class="font-bold">{{ $contributor->user->staff->surname}}  {{ $contributor->user->staff->firstname}}</div>
+                                                            <div>{{ $contributor->user->staff->department->department_name}}  {{ $contributor->user->staff->department->department_code}}</div>
+                                                            <div>{{ $contributor->user->staff->department->ministry->name}}</div>
+                                                            <div class="w-full">
+                                                                @if (Auth::user()->id == $contributor->add_initiator->id)
+                                                                    <div class="flex text-end justify-end "> 
+                                                                        <a class="flex text-xs bg-red-300 px-2 py-1 text-white rounded-md hover:bg-red-400">   
+                                                                            Delete
+                                                                        </a>
+                                                                    </div>
+                                                                @endif
                                                             </div>
-                                                        @endif
-                                                    </div>
-                                                <div>
+                                                        </div>
+                                                </div>
                                         </div>
                                     @endforeach
                             </div>
