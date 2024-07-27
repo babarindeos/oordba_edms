@@ -63,7 +63,7 @@
                 </div><!-- end of left pane //-->
 
 
-                <div class="flex flex-col border-l  md:w-[60%] px-3 py-2"><!-- Right pane //-->
+                <div class="flex flex-col md:border-l  md:w-[60%] px-3 py-2"><!-- Right pane //-->
                     <form action="{{ route('staff.workflows.general_message.store',['document'=>$document->id]) }}" method="POST">
                             @csrf
                             <!-- textarea //-->

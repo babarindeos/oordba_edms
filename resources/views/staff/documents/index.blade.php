@@ -75,7 +75,17 @@
 
                                                 @if ($doc->document->private_messages->count())
                                                     <a href="{{ route('staff.workflows.private_messages.my_private_messages', ['document'=>$doc->document->id, 'recipient'=>$doc->user_id])}}">
-                                                        Private Messages ({{ $doc->document->private_messages->count() }})
+                                                        @php
+                                                            $pmCount = 0;
+                                                            foreach($doc->document->private_messages as $pm)
+                                                            {
+                                                                if ($pm->sender_id==Auth::id() || $pm->recipient_id==Auth::id())
+                                                                {
+                                                                    $pmCount++;
+                                                                }
+                                                            }
+                                                        @endphp
+                                                        Private Messages ({{ $pmCount }})
                                                     </a>
                                                 @endif
                                             </div>

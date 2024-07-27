@@ -12,6 +12,7 @@ use App\Models\FlowContributor;
 use App\Models\Document;
 use App\Models\PrivateMessage;
 use App\Http\Classes\MessageClass;
+use Illuminate\Support\Facades\DB;
 
 class Staff_PrivateMessageController extends Controller
 {
@@ -46,7 +47,8 @@ class Staff_PrivateMessageController extends Controller
 
         //dd($workflow_contributors);
 
-        $messages = PrivateMessage::where('chat_uuid', $chat_uuid)->orderBy('created_at', 'desc')->get();
+        $messages = PrivateMessage::where('doc_id', $document->id)
+                                    ->where('chat_uuid', $chat_uuid)->orderBy('created_at', 'desc')->get();
 
 
         $sender = User::find($sender);
@@ -75,13 +77,25 @@ class Staff_PrivateMessageController extends Controller
         return redirect()->back();
     }
 
-    public function my_private_messages()
+    public function my_private_messages(Document $document)
     {
-        $private_messages = PrivateMessage::where('recipient_id', Auth::user()->id)
-                                            ->groupBy('sender_id')
+
+        // Alternative code to using *
+        //$private_messages = PrivateMessage::select('chat_uuid', 'sender_id', 'recipient_id', 'created_at', DB::raw('count(*) as message_count'))
+
+        $private_messages = PrivateMessage::select('*', DB::raw('count(*) as message_count'))
+                                            ->where('doc_id', $document->id)
+                                            ->where(function($query){
+                                                $query->where('sender_id', Auth::user()->id)
+                                                      ->orWhere('recipient_id', Auth::user()->id);
+                                            })                                            
+                                            ->groupBy('chat_uuid')
                                             ->orderBy('created_at', 'desc')
-                                            ->get();
-        dd($private_messages);
+                                            ->paginate(10);
+        
+        //dd($private_messages);
+        
+        return view('staff.private_messages.my_private_messages', compact('private_messages', 'document'));
     }
 
 

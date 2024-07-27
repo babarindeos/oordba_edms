@@ -11,11 +11,14 @@
         @include('partials._document_submenu1')
 
 
-        <section class="py-8 mt-2">
+        <section class="flex flex-col md:flex-row md:space-x-4 py-8 mt-2 border-0 border-blue-900">
 
-            <div class="flex flex-col md:flex-row w-full space-y-4 md:space-y-0 md:space-x-4 ">
-                    <!-- left panel //-->
-                    <div class="flex flex-col w-full md:w-3/5 border border-1 rounded-md py-2 px-4">
+            <!-- left column //-->
+            <div class="flex flex-col w-full md:w-3/5 space-y-4 md:space-y-8  border-0 border-green-900 ">                   
+                    
+
+                    <!-- Top Panel - Document //-->                    
+                    <div class="flex flex-col w-full md:w-full border border-1 rounded-md py-2 px-4">
                             <div class="border-b border-1 py-2">
                                     <div class="font-semibold">
                                         {{ $document->title}}
@@ -31,7 +34,7 @@
                                     </div>
                             </div>
                             <div class="flex flex-row text-sm py-4 justify-content items-start">
-                                        <div class="flex flex-col w-1/5">
+                                        <div class="flex flex-col w-2/5 md:w-1/5">
                                                 <a href="{{ asset('storage/'.$document->document) }}" target="_blank" 
                                                         class="px-6 py-6 text-center border border-1 hover:bg-blue-100 
                                                             rounded-md hover:border-blue-100 justify-center">
@@ -238,153 +241,171 @@
                             </div>
 
                     </div>
-                    <!-- end of left panel //-->
+                    <!-- end of Top panel -Document //-->
 
-                    <!-- right panel //-->
-                    <div class="w-full md:w-2/5 md:flex-grow border border-1 py-4 px-4 rounded-md">
-                            <div class="flex justify-between ">
-                                    <div class="font-semibold text-gray-500">
-                                        Workflow Contributors
-                                    </div>
-                                    <div class="text-xs">                                        
-                                        <a href="{{ route('staff.workflows.general_message',['document'=>$document->id]) }}" class="border border-1 rounded-md border-green-500 py-1 px-3
-                                                  hover:bg-green-500 hover:text-white">
-                                                General Message
-                                        </a>
-                                    </div>
-                            </div>
 
-                            <div class="w-full mt-2">
-                                @foreach($workflow_contributors as $contributor)
-                                    <div class="w-full py-1">
-                                            <div class="flex flex-row w-full text-sm border-b ">
-                                                    <div class="flex flex-col justify-center px-2 py-2 items-center">
-                                                            <img class="w-12" src="{{ asset('images/avatar_64.jpg')}}" />                                                                
+
+                    <!-- Bottom panel - Workflow //-->
+                    <section class="border border-0 border-red-900 w-full space-x-2 py-4">
+                        <div class="flex flex-col md:flex-row space-x-4">
+                            <div class="w-full ">
+                                    <div class="border-b py-2 px-4 font-semibold text-gray-700 rounded-md">
+                                        <i class="fa fa-envelope-o" aria-hidden="true"></i> Workflow Transactions ({{ $workflow_transactions->count() }})
+                                    </div>
+                                    <div class="px-4 py-2 space-y-4">
+                                        @foreach($workflow_transactions as $transactions)
+                                            <div class="rounded-md bg-gray-100 px-2 py-2">
+                                                    <div class="text-sm">From <span class="font-medium">{{ $transactions->sender->surname}} {{ $transactions->sender->firstname }}</span> --&raquo; <span class="font-medium">{{$transactions->recipient->surname}} {{$transactions->recipient->firstname}}</span></div>
+                                                    <div class="text-xs">
+                                                        {{ $transactions->created_at->format('l jS F, Y @ g:i a')}}
                                                     </div>
-                                                    <div class="flex flex-col py-2 w-full">
-                                                        <div class="font-bold">{{ $contributor->user->staff->surname }}  ({{ $contributor->user->staff->firstname }})</div>
-                                                        <div>{{ $contributor->user->staff->department->department_name }}  ({{ $contributor->user->staff->department->department_code }})</div>
-                                                        <div>{{ $contributor->user->staff->department->ministry->name }} ({{ $contributor->user->staff->department->ministry->code }})</div>
-                                                        <div class="w-full">
-                                                            @if (Auth::user()->id != $contributor->user_id)
-                                                                @php
-                                                                    $unreadCount = 0;
-                                                                @endphp
-
-                                                                @foreach($my_private_messages as $private_message)
-                                                                    @if ($private_message->sender_id==$contributor->user_id && $private_message->read==false)
-                                                                            @php
-                                                                                $unreadCount++;
-                                                                            @endphp
-                                                                            
-                                                                    @endif
-                                                                @endforeach
-
-                                                                <div class="flex text-end justify-end items-center "> 
-                                                                    <span class='px-2 text-xs text-red-500'>
-                                                                            @if ($unreadCount>0)
-                                                                                {{ $unreadCount }} unread messages
-                                                                            @endif
-                                                                    </span>
-                                                                    <a href="{{ route('staff.workflows.private_message.index', ['document'=>$document->id, 'recipient'=>$contributor->user_id]) }}"  class="flex text-xs border border-1 border-green-500 px-2 py-1 rounded-md 
-                                                                            hover:bg-green-500 hover:text-white">   
-                                                                        Message
-                                                                    </a>
-                                                                </div>
+                                                    <div class="py-2">
+                                                        <div>
+                                                            @if ($transactions->status=='approved')
+                                                                <span class='bg-green-200 px-2 py-1 text-xs rounded-md'>
+                                                                    {{ $transactions->status}}
+                                                                </span>
+                                                            @else
+                                                                <span class='bg-red-200 px-2 py-1 text-xs rounded-md'>
+                                                                    {{ $transactions->status}}
+                                                                </span>
                                                             @endif
+                                                            
                                                         </div>
+                                                        <div class="text-sm">
+                                                            {{ $transactions->comment}}
+                                                        </div>
+
                                                     </div>
+
                                             </div>
+                                        @endforeach
+
                                     </div>
-                                @endforeach
                             </div>
-                    </div>
-                    <!-- end of right panel //-->
+                        </div>
+                    </section>
+                    <!-- end of Bottom panel -->
+
+                    
             </div>
+            <!-- end of left Column //-->
+
+
+
+            <!-- Right column //-->
+            <section class="flex flex-col md:w-2/5">
+                        <div class="flex flex-col border border-0 w-full space-y-8">
+                                    <!-- right panel //-->
+                                    <div class="w-full  border border-1 py-4 px-4 rounded-md">
+                                        <div class="flex justify-between ">
+                                                <div class="font-semibold text-gray-500">
+                                                    Workflow Contributors
+                                                </div>
+                                                <div class="text-xs">                                        
+                                                    <a href="{{ route('staff.workflows.general_message',['document'=>$document->id]) }}" class="border border-1 rounded-md border-green-500 py-1 px-3
+                                                            hover:bg-green-500 hover:text-white">
+                                                            General Message
+                                                    </a>
+                                                </div>
+                                        </div>
+
+                                        <div class="w-full mt-2">
+                                            @foreach($workflow_contributors as $contributor)
+                                                <div class="w-full py-1">
+                                                        <div class="flex flex-row w-full text-sm border-b ">
+                                                                <div class="flex flex-col justify-center px-2 py-2 items-center">
+                                                                        <img class="w-12" src="{{ asset('images/avatar_64.jpg')}}" />                                                                
+                                                                </div>
+                                                                <div class="flex flex-col py-2 w-full">
+                                                                    <div class="font-bold">{{ $contributor->user->staff->surname }}  ({{ $contributor->user->staff->firstname }})</div>
+                                                                    <div>{{ $contributor->user->staff->department->department_name }}  ({{ $contributor->user->staff->department->department_code }})</div>
+                                                                    <div>{{ $contributor->user->staff->department->ministry->name }} ({{ $contributor->user->staff->department->ministry->code }})</div>
+                                                                    <div class="w-full">
+                                                                        @if (Auth::user()->id != $contributor->user_id)
+                                                                            @php
+                                                                                $unreadCount = 0;
+                                                                            @endphp
+
+                                                                            @foreach($my_private_messages as $private_message)
+                                                                                @if ($private_message->sender_id==$contributor->user_id && $private_message->read==false)
+                                                                                        @php
+                                                                                            $unreadCount++;
+                                                                                        @endphp
+                                                                                        
+                                                                                @endif
+                                                                            @endforeach
+
+                                                                            <div class="flex text-end justify-end items-center "> 
+                                                                                <span class='px-2 text-xs text-red-500'>
+                                                                                        @if ($unreadCount>0)
+                                                                                            {{ $unreadCount }} unread messages
+                                                                                        @endif
+                                                                                </span>
+                                                                                <a href="{{ route('staff.workflows.private_message.index', ['document'=>$document->id, 'recipient'=>$contributor->user_id]) }}"  class="flex text-xs border border-1 border-green-500 px-2 py-1 rounded-md 
+                                                                                        hover:bg-green-500 hover:text-white">   
+                                                                                    Message
+                                                                                </a>
+                                                                            </div>
+                                                                        @endif
+                                                                    </div>
+                                                                </div>
+                                                        </div>
+                                                </div>
+                                            @endforeach
+                                        </div>
+                                </div>
+                                <!-- end of top panel //-->
+
+
+                                <!-- bottom panel //-->
+                                <section>
+                                            <div class="w-full">
+                                                <div class="py-2 px-4 border-b font-semibold text-gray-700 rounded-md">
+                                                    <i class="fa fa-envelope-o" aria-hidden="true"></i> General Messages ({{ $general_messages->count() }})
+                                                </div>
+                                                
+                                                <!-- list of messages //-->
+                                                <div class="flex flex-col border-0 border-blue-900 h-50 overflow-y-auto py-2 px-2 mt-2">
+                                                        
+                                                    @foreach ($general_messages as $message)
+                                                        <div class="flex flex-row my-2">
+                                                                <div class="px-3 border-0">
+                                                                        <img class="w-12" src="{{ asset('images/avatar_64.jpg')}}" />  
+                                                                </div>
+                                                                <div class="px-3 py-1 rounded-md bg-gray-100 w-full">
+                                                                        <div class="font-semibold text-sm">
+                                                                                {{ $message->sender->surname }} {{ $message->sender->firstname }}
+                                                                        </div>
+                                                                        <div class="text-xs">
+                                                                                {{ $message->created_at->format('l jS F, Y @ g:i a') }}
+                                                                        </div>
+                                                                        <div class="text-sm py-2">
+                                                                                {{ $message->message}}
+                                                                        </div>
+
+                                                                </div>
+                                                        </div>
+                                                    @endforeach
+
+                                                </div>
+                                                <!-- end of list of messages //-->
+
+                                        </div>
+                                        
+                                </section>
+                                <!-- end of bottom panel //-->
+
+
+
+                        </div>
+            </section>
+            <!--end of right column //-->
              
         </section>
 
 
-        <!-- Flow //-->
-        <section>
-            <div class="flex flex-col md:flex-row space-x-4">
-                <!-- left panel //-->
-                <div class="md:w-3/5 w-full px-2">
-                        <div class="border-b py-2 px-4 font-semibold text-gray-700 rounded-md">
-                            <i class="fa fa-envelope-o" aria-hidden="true"></i> Workflow Transactions ({{ $workflow_transactions->count() }})
-                        </div>
-                        <div class="px-4 py-2 space-y-4">
-                            @foreach($workflow_transactions as $transactions)
-                                <div class="rounded-md bg-gray-100 px-2 py-2">
-                                        <div class="text-sm">From <span class="font-medium">{{ $transactions->sender->surname}} {{ $transactions->sender->firstname }}</span> --&raquo; <span class="font-medium">{{$transactions->recipient->surname}} {{$transactions->recipient->firstname}}</span></div>
-                                        <div class="text-xs">
-                                             {{ $transactions->created_at->format('l jS F, Y @ g:i a')}}
-                                        </div>
-                                        <div class="py-2">
-                                            <div>
-                                                @if ($transactions->status=='approved')
-                                                    <span class='bg-green-200 px-2 py-1 text-xs rounded-md'>
-                                                        {{ $transactions->status}}
-                                                    </span>
-                                                @else
-                                                    <span class='bg-red-200 px-2 py-1 text-xs rounded-md'>
-                                                        {{ $transactions->status}}
-                                                    </span>
-                                                @endif
-                                                
-                                            </div>
-                                            <div class="text-sm">
-                                                {{ $transactions->comment}}
-                                            </div>
-
-                                        </div>
-
-                                </div>
-                            @endforeach
-
-                        </div>
-                </div>
-                <!-- end left panel //-->
-
-                 <!-- right panel //-->
-                <div class="w-full md:w-2/5">
-                        <div class="py-2 px-4 border-b font-semibold text-gray-700 rounded-md">
-                            <i class="fa fa-envelope-o" aria-hidden="true"></i> General Messages ({{ $general_messages->count() }})
-                        </div>
-                        
-                        <!-- list of messages //-->
-                        <div class="flex flex-col border-0 border-blue-900 h-50 overflow-y-auto py-2 mt-2">
-                                
-                            @foreach ($general_messages as $message)
-                                <div class="flex flex-row my-2">
-                                        <div class="px-3 border-0">
-                                                <img class="w-12" src="{{ asset('images/avatar_64.jpg')}}" />  
-                                        </div>
-                                        <div class="px-3 py-1 rounded-md bg-gray-100 w-full">
-                                                <div class="font-semibold text-sm">
-                                                        {{ $message->sender->surname }} {{ $message->sender->firstname }}
-                                                </div>
-                                                <div class="text-xs">
-                                                        {{ $message->created_at->format('l jS F, Y @ g:i a') }}
-                                                </div>
-                                                <div class="text-sm py-2">
-                                                        {{ $message->message}}
-                                                </div>
-
-                                        </div>
-                                </div>
-                            @endforeach
-
-                        </div>
-                        <!-- end of list of messages //-->
-
-                </div>
-                <!-- end right panel //-->
-
-            </div>
-        </section>
-        <!-- end of flow //-->
-        
+            
     </div>
     
 
