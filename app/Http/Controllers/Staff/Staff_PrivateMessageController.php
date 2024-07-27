@@ -75,5 +75,14 @@ class Staff_PrivateMessageController extends Controller
         return redirect()->back();
     }
 
+    public function my_private_messages()
+    {
+        $private_messages = PrivateMessage::where('recipient_id', Auth::user()->id)
+                                            ->groupBy('sender_id')
+                                            ->orderBy('created_at', 'desc')
+                                            ->get();
+        dd($private_messages);
+    }
+
 
 }

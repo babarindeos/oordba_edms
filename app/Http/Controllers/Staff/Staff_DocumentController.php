@@ -11,6 +11,8 @@ use Illuminate\Support\Str;
 use App\Models\Document as DocumentModel;
 use App\Models\Workflow;
 use App\Models\FlowContributor;
+use Illuminate\Database\Query\Builder;
+use Illuminate\Support\Facades\DB;
 
 
 class Staff_DocumentController extends Controller
@@ -19,7 +21,18 @@ class Staff_DocumentController extends Controller
 
     public function index()
     {
-        return view('staff.documents.index');
+        //$documents = DB::table('workflows')->groupBy('doc_id')->get();
+        //$documents = DB::table('flow_contributors')
+                     //->join('workflows', 'flow_contributors.doc_id','=','workflows.doc_id')
+                     //->select('flow_contributors.user_id', 'workflows.*')
+                     //->where('flow_contributors.user_id', auth()->user()->id)
+                    // ->get();
+        $documents = FlowContributor::where('user_id', auth()->user()->id)->orderBy('id','desc')->paginate(10);
+        //dd($documents->document->private_messages);
+
+        
+
+        return view('staff.documents.index', compact('documents'));
     }
 
     public function create()
@@ -122,6 +135,12 @@ class Staff_DocumentController extends Controller
         $document = DocumentModel::where('uploader', auth()->user()->id)
                                     ->where('id', $document)->first();
         
+
+        if ($document == null)
+        {
+            return redirect()->back();
+        }
+        
         $workflowCount = Workflow::where('doc_id', $document->id)->count();  
         
         $workflow_contributors = FlowContributor::where('doc_id', $document->id)->get();
@@ -140,6 +159,8 @@ class Staff_DocumentController extends Controller
         $mydocuments = DocumentModel::where('uploader', $my_user_id)->orderBy('id', 'desc')->paginate(2);
         return view('staff.documents.my_documents')->with('documents', $mydocuments);
     }
+
+    
 
 
 

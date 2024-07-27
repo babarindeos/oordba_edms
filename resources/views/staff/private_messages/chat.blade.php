@@ -9,11 +9,18 @@
         </section>
     
         <section>
-                <div class="flex">
-                        <a onclick="history.back();" class="border px-4 py-1 mt-1 cursor-pointer 
-                                                            hover:font-semibold hover:border-gray-300">    
-                                &laquo; Back
-                        </a>
+                <div class="flex flex-row space-x-4 md:space-x-8">
+                        <div class="flex">
+                                <a onclick="history.back();" class="border px-4 py-1 mt-1 cursor-pointer 
+                                                                hover:font-semibold hover:border-gray-300">    
+                                        &laquo; Back
+                                </a>
+                        </div>
+                        <div class="flex md:justify-center items-center">
+                                <a href="{{ route('staff.workflows.flow', ['document'=>$document->id]) }}" class="font-semibold hover:underline cursor-pointer">
+                                {{ $document->title }}
+                                </a>
+                        </div>
                 </div>
         </section>
 

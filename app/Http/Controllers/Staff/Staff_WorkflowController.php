@@ -12,6 +12,7 @@ use App\Models\FlowContributor;
 use App\Models\Workflow;
 use App\Http\Classes\WorkflowClass;
 use App\Models\PrivateMessage;
+use App\Models\GeneralMessage;
 
 class Staff_WorkflowController extends Controller
 {
@@ -31,7 +32,9 @@ class Staff_WorkflowController extends Controller
                                               ->where('read', false)->get();
         
 
-        return view('staff.workflows.flow', compact('document', 'workflow_contributors', 'current_handler', 'workflow_transactions', 'my_private_messages'));
+        $general_messages = GeneralMessage::where('doc_id', $document->id)->orderBy('created_at', 'desc')->get();
+
+        return view('staff.workflows.flow', compact('document', 'workflow_contributors', 'current_handler', 'workflow_transactions', 'my_private_messages', 'general_messages'));
     }
 
     public function add_contributor(Document $document)

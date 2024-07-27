@@ -19,7 +19,7 @@
         
 
         @if (count($workflow_notifications) > 0 )
-        <div class="md:w-[50%]">
+        <div class="md:flex-1">
             <section class="py-8 mt-2">
                     <div class="text-lg font-semibold text-gray-600 border-b border-gray-200 ">
                         Workflow Notifications ({{ $workflow_notifications->count() }})
@@ -54,7 +54,7 @@
 
         
         @if (count($private_message_notifications) > 0 )
-        <div>
+        <div class="md:flex-1">
             <section class="py-8 mt-2">
                     <div class="text-lg font-semibold text-gray-600 border-b border-gray-200 ">
                         Message Notifications ({{ $private_message_notifications->count() }})
@@ -63,7 +63,7 @@
                         <ul class="list-disc px-10">
                             @foreach ($private_message_notifications as $notification)
                                 <li class="py-3 border-b border-gray-100">
-                                    <a title="{{ $notification->message }}" class="hover:underline"  >
+                                    <a href="{{ route('staff.workflows.private_message.index', ['document'=>$notification->id, 'recipient'=>$notification->sender_id]) }}" title="{{ $notification->message }}" class="hover:underline"  >
                                     
                                         <div class="font-medium text-gray-700">
                                             {{$notification->message}}

@@ -1,6 +1,6 @@
 <x-staff-layout>
 
-    <div class="flex flex-col container mx-4 border border-0 md:mx-auto">
+    <div class="flex flex-col container mx-4 mb-8 border border-0 md:mx-auto">
         <section class="border-b border-gray-200 py-2 mt-2">
                 <div class="text-2xl font-semibold ">
                     Workflow            
@@ -262,9 +262,9 @@
                                                             <img class="w-12" src="{{ asset('images/avatar_64.jpg')}}" />                                                                
                                                     </div>
                                                     <div class="flex flex-col py-2 w-full">
-                                                        <div class="font-bold">{{ $contributor->user->staff->surname}}  {{ $contributor->user->staff->firstname}}</div>
-                                                        <div>{{ $contributor->user->staff->department->department_name}}  {{ $contributor->user->staff->department->department_code}}</div>
-                                                        <div>{{ $contributor->user->staff->department->ministry->name}}</div>
+                                                        <div class="font-bold">{{ $contributor->user->staff->surname }}  ({{ $contributor->user->staff->firstname }})</div>
+                                                        <div>{{ $contributor->user->staff->department->department_name }}  ({{ $contributor->user->staff->department->department_code }})</div>
+                                                        <div>{{ $contributor->user->staff->department->ministry->name }} ({{ $contributor->user->staff->department->ministry->code }})</div>
                                                         <div class="w-full">
                                                             @if (Auth::user()->id != $contributor->user_id)
                                                                 @php
@@ -347,8 +347,37 @@
                 <!-- end left panel //-->
 
                  <!-- right panel //-->
-                <div class="w-full md:w-2/5 rounded-md py-2 px-4 font-semibold text-gray-700 border-b  ">
-                        Messages
+                <div class="w-full md:w-2/5">
+                        <div class="py-2 px-4 border-b font-semibold text-gray-700 rounded-md">
+                            <i class="fa fa-envelope-o" aria-hidden="true"></i> General Messages ({{ $general_messages->count() }})
+                        </div>
+                        
+                        <!-- list of messages //-->
+                        <div class="flex flex-col border-0 border-blue-900 h-50 overflow-y-auto py-2 mt-2">
+                                
+                            @foreach ($general_messages as $message)
+                                <div class="flex flex-row my-2">
+                                        <div class="px-3 border-0">
+                                                <img class="w-12" src="{{ asset('images/avatar_64.jpg')}}" />  
+                                        </div>
+                                        <div class="px-3 py-1 rounded-md bg-gray-100 w-full">
+                                                <div class="font-semibold text-sm">
+                                                        {{ $message->sender->surname }} {{ $message->sender->firstname }}
+                                                </div>
+                                                <div class="text-xs">
+                                                        {{ $message->created_at->format('l jS F, Y @ g:i a') }}
+                                                </div>
+                                                <div class="text-sm py-2">
+                                                        {{ $message->message}}
+                                                </div>
+
+                                        </div>
+                                </div>
+                            @endforeach
+
+                        </div>
+                        <!-- end of list of messages //-->
+
                 </div>
                 <!-- end right panel //-->
 
