@@ -54,4 +54,9 @@ class User extends Authenticatable
     {
         return $this->hasMany(FlowContributor::class, 'user_id', 'id');
     }
+
+    public function profile()
+    {
+        return $this->hasOne(Profile::class, 'user_id', 'id');
+    }
 }

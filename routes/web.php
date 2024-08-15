@@ -19,6 +19,8 @@ use App\Http\Controllers\Staff\Staff_WorkflowController;
 use App\Http\Controllers\Staff\Staff_GeneralMessageController;
 use App\Http\Controllers\Staff\Staff_PrivateMessageController;
 
+use App\Http\Controllers\Staff\Staff_ProfileController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -73,6 +75,12 @@ Route::prefix('staff')->middleware(['auth', 'staff'])->group(function(){
     Route::get('/workflows/{document}/private_message/{sender}/{recipient}/{chat_uuid}/chat', [Staff_PrivateMessageController::class, 'chat'])->name('staff.workflows.private_message.chat');
 
     Route::post('/workflows/{document}/private_message/{sender}/{recipient}/{chat_uuid}/chat', [Staff_PrivateMessageController::class, 'store'])->name('staff.workflows.private_message.store');
+
+    Route::get('/profile/create', [Staff_ProfileController::class, 'create'])->name('staff.profile.create');
+    Route::post('/profile/create', [Staff_ProfileController::class, 'store'])->name('staff.profile.store');
+    Route::post('/profile/upload_avatar', [Staff_ProfileController::class, 'upload_avatar'])->name('staff.profile.upload_avatar');
+
+    Route::get('/profile/myprofile', [Staff_ProfileController::class, 'myprofile'])->name('staff.profile.myprofile');
 });
 
 

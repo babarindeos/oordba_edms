@@ -16,7 +16,7 @@ class StaffAuth
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (Auth::check() && Auth::user()->role==='staff')
+        if (Auth::check() && (Auth::user()->role==='staff' || Auth::user()->role==='Manager'))
         {
             
             return $next($request);

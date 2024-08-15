@@ -7,12 +7,29 @@ use Illuminate\Http\Request;
 use App\Models\Workflow;
 use App\Models\PrivateMessage;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Profile;
 
 class Staff_DashboardController extends Controller
 {
+
+    public function __construct()
+    {
+        // check if the user profile has been filled
+       
+    }
+
     //
     public function index()
     {
+        
+        $profileExists = Profile::where('user_id', Auth::user()->id)->exists();
+
+        // if user profile does not exist, create it
+        if (!$profileExists)
+        {
+            return redirect()->route('staff.profile.create');
+        }
+
         // get notification
         $workflow_notifications = Workflow::where('recipient_id', Auth::user()->id)
                                             ->where('read', false)

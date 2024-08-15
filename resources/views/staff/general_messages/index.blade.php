@@ -35,8 +35,13 @@
                             @foreach($workflow_contributors as $contributor)
                                 <div class="w-full py-1">
                                         <div class="flex flex-row w-full text-sm border-b ">
-                                                <div class="flex flex-col justify-center px-2 py-2 items-center">
-                                                        <img class="w-12" src="{{ asset('images/avatar_64.jpg')}}" />                                                                
+                                                <div class="flex flex-col justify-center px-4 py-2 items-center">
+                                                        @if ($contributor->user->profile!=null && $contributor->user->profile->avatar!='')
+                                                            <img class="w-12 h-10 rounded-full" src="{{ asset('storage/'.$contributor->user->profile->avatar)}}" />
+                                                        @else
+                                                            <img class="w-12" src="{{ asset('images/avatar_64.jpg')}}" />
+                                                        @endif
+                                                                                                                       
                                                 </div>
                                                 <div class="flex flex-col py-2 w-full">
                                                     <div class="font-bold">{{ $contributor->user->staff->surname}}  {{ $contributor->user->staff->firstname}}</div>
@@ -107,7 +112,14 @@
                         @foreach ($messages as $message)
                             <div class="flex flex-row my-2">
                                     <div class="px-3 border-0">
-                                            <img class="w-12" src="{{ asset('images/avatar_64.jpg')}}" />  
+                                            @if ($message->sender->profile!=null && $message->sender->profile->avatar!="" )
+                                            
+                                                <img src="{{ asset('storage/'.$message->sender->profile->avatar)}}" class='w-12 h-10 rounded-full' />
+                                                
+                                            @else
+                                                <img class="w-12" src="{{ asset('images/avatar_64.jpg')}}" />  
+                                            @endif
+                                            
                                     </div>
                                     <div class="px-3 py-1 rounded-md bg-gray-100 w-full">
                                             <div class="font-semibold text-sm">

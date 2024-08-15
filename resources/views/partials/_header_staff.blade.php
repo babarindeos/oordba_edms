@@ -25,6 +25,7 @@
                         <a  href="{{ route('staff.dashboard.index') }}" class="flex font-semibold items-center text-white hover:border-b-yellow-100 hover:border-b-4 mx-3 ">Dashboard</a>
                         <a  href='{{ route('staff.document.index') }}' class="flex font-semibold items-center text-white hover:border-b-yellow-100 hover:border-b-4 mx-3 ">Documents</a>
                         
+                        <a  href='{{ route('staff.profile.myprofile') }}' class="flex font-semibold items-center text-white hover:border-b-yellow-100 hover:border-b-4 mx-3 ">Profile</a>
                         <form action="{{ route('staff.auth.logout') }}" method="POST">
                             @csrf
                             

@@ -7,6 +7,9 @@
 
         <title>{{ config('app.name', 'Staff Stats') }}</title>
 
+        <meta name="csrf_token" content="{{ csrf_token() }}" />
+
+        <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
@@ -16,7 +19,7 @@
     </head>
     <body class="font-sans text-gray-900 antialiased flex flex-col min-h-screen">
         <header>
-                @include('partials._header_staff')
+                @include('partials._header_guest')
         </header>
         <main class="flex flex-1">
                 {{ $slot }}

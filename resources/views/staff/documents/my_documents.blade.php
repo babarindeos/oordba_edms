@@ -11,76 +11,122 @@
         @include('partials._document_submenu1')
 
 
-        <section class="flex flex-col py-1 mt-8 justif-end">
-            <div class="flex justify-end border border-0">
-            
-                <input type="text" name="document_title" class="w-3/5 md:w-2/5 border border-1 border-gray-400 bg-gray-50
-                            p-2 rounded-md 
-                            focus:outline-none
-                            focus:border-blue-500 
-                            focus:ring
-                            focus:ring-blue-100" placeholder="Search"                
-                          
-                            style="font-family:'Lato';font-size:16px;font-weight:500;"                                                                  
-                
-                />  
-            </div>
-             
-        </section>
+        <!-- Check if user has documens //-->
+        @if ($documents->count())
 
-        <section class="flex flex-col py-2 ">
-            <table class="table-auto border-collapse border border-1 border-gray-200" 
-                        >
-                <tr class="bg-gray-200">
-                    <td class="text-center font-semibold py-2 w-16">SN</td>
-                    <td class="font-semibold py-2">Documents</td>
-                    <td class="font-semibold py-2">Date Created</td>
+                <section class="flex flex-col py-1 mt-8 justify-end">
+                    <div class="flex justify-end border border-0">
                     
-                </tr>
-                <tbody>
-                    @php
-                        $counter = ($documents->currentPage() - 1) * $documents->perPage();
-                    @endphp
-                    @foreach($documents as $document)
-                        <tr class="border border-b border-gray-200 ">
-                            <td class='text-center py-4'>{{ ++$counter }}.</td>
-                            <td class="py-2 pr-4">
+                        <input type="text" name="document_title" class="w-3/5 md:w-2/5 border border-1 border-gray-400 bg-gray-50
+                                    p-2 rounded-md 
+                                    focus:outline-none
+                                    focus:border-blue-500 
+                                    focus:ring
+                                    focus:ring-blue-100" placeholder="Search"                
                                 
-                                <div>
-                                    <a href="{{ route('staff.documents.show', ['document'=>$document->id]) }}" class='text-blue-500 underline font-semibold' href=''>
-                                        {{ $document->title }}
-                                    </a>
-                                </div>
-                                <div class='flex flex-col space-y-1 md:flex-row justify-between text-xs'>
-                                    <div>
-                                            <div>{{ $document->filetype }} ({{ $document->filesize }})</div>
-                                    </div>
-                                    <div class="md:px-4 border border-0">
-                                        <span class="px-2 py-1 rounded-md" style="background-color: #daf1e6;">
-                                            {{ $document->uuid }}
-                                        </span>
-                                    </div>
-                                </div>
-                            
-                            </td>
-                            <td width="20%" class="text-sm">
-                                    <div class="px-0">
-                                        {{ $document->created_at->format('l jS F, Y @ g:i a')}}
-                                    </div>
-                            </td>
+                                    style="font-family:'Lato';font-size:16px;font-weight:500;"                                                                  
+                        
+                        />  
+                    </div>
+                    
+                </section>
+
+                <section class="flex flex-col py-2 ">
+                    <table class="table-auto border-collapse border border-1 border-gray-200" 
+                                >
+                        <tr class="bg-gray-200">
+                            <td class="text-center font-semibold py-2 w-16">SN</td>
+                            <td class="font-semibold py-2">Documents</td>
+                            <td class="font-semibold py-2">Date Created</td>
                             
                         </tr>
-                    @endforeach
-                    
-                </tbody>
+                        <tbody>
+                            @php
+                                $counter = ($documents->currentPage() - 1) * $documents->perPage();
+                            @endphp
+                            @foreach($documents as $document)
+                                <tr class="border border-b border-gray-200 ">
+                                    <td class='text-center py-4'>{{ ++$counter }}.</td>
+                                    <td class="py-2 pr-4">
+                                        
+                                        <div>
+                                            <a href="{{ route('staff.documents.show', ['document'=>$document->id]) }}" class='text-blue-500 underline font-semibold' href=''>
+                                                {{ $document->title }}
+                                            </a>
+                                        </div>
+                                        <div class='flex flex-col space-y-1 md:flex-row justify-between text-xs'>
+                                            <div>
+                                                    <div>{{ $document->filetype }} ({{ $document->filesize }})</div>
 
-            </table>
+                                                    <div class="flex flex-col md:flex-row space-y-1 py-1 md:space-x-8 md:space-y-0">
+                                                        @if ($document->workflows->count())
+                                                            <a class="hover:underline cursor-pointer" href="{{ route('staff.workflows.flow', ['document'=>$document->id]) }}" > 
+                                                                Workflow ({{ $document->workflows->count() }})
+                                                            </a>
+                                                        @endif
 
-            {{ $documents->links() }}
+                                                        @if ($document->general_messages->count())
+                                                            <a href="{{ route('staff.workflows.general_message', ['document'=>$document->id]) }}" class="hover:underline cursor-pointer">
+                                                                    General Messages ({{ $document->general_messages->count() }})
+                                                            </a>
+                                                        @endif
+
+                                                        
+                                                            
+
+                                                        @if ($document->private_messages->count())
+                                                            <a href="{{ route('staff.workflows.private_messages.my_private_messages', ['document'=>$document->id, 'recipient'=>$document->uploader])}}">
+                                                                @php
+                                                                    $pmCount = 0;
+                                                                    foreach($document->private_messages as $pm)
+                                                                    {
+                                                                        if ($pm->sender_id==Auth::id() || $pm->recipient_id==Auth::id())
+                                                                        {
+                                                                            $pmCount++;
+                                                                        }
+                                                                    }
+                                                                @endphp
+                                                                Private Messages ({{ $pmCount }})
+                                                            </a>
+                                                        @endif
+                                                    </div>
+                                            </div>
+                                            <!--
+                                            <div class="md:px-4 border border-0">
+                                                <span class="px-2 py-1 rounded-md" style="background-color: #daf1e6;">
+                                                    {{ $document->uuid }}
+                                                </span>
+                                            </div>
+                                            //-->
+                                        </div>
+                                    
+                                    </td>
+                                    <td width="20%" class="text-sm">
+                                            <div class="px-0">
+                                                {{ $document->created_at->format('l jS F, Y @ g:i a')}}
+                                            </div>
+                                    </td>
+                                    
+                                </tr>
+                            @endforeach
+                            
+                        </tbody>
+
+                    </table>
+
+                    {{ $documents->links() }}
 
 
-        </section>
+                </section>
+        @else
+                <div class="my-16 border border-1 rounded md:w-1/2">
+                        <div class="flex p-8">
+                                You currently have no documents uploaded by you.
+                        </div>
+
+                </div>
         
+        @endif
     </div>
     
     </x-staff-layout>

@@ -34,7 +34,14 @@
                         @foreach ($private_messages as $pmessage)
                             <div class="flex flex-row my-2">
                                     <div class="px-3 border-0">
-                                            <img class="w-12" src="{{ asset('images/avatar_64.jpg')}}" />  
+                                             
+                                            @if ($pmessage->sender->profile!=null && $pmessage->sender->profile->avatar!="" )
+                                            
+                                                <img src="{{ asset('storage/'.$pmessage->sender->profile->avatar)}}" class='w-12 h-10 rounded-full' />
+                                        
+                                            @else
+                                                <img class="w-12" src="{{ asset('images/avatar_64.jpg')}}" />  
+                                            @endif 
                                     </div>
                                     <div class="px-3 py-1 rounded-md bg-gray-100 w-full">
                                             <div class="font-semibold text-sm">
