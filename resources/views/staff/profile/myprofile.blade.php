@@ -11,13 +11,24 @@
             <div class="flex flex-col w-full  md:w-[30%] justify-center items-center 
                         border px-8 py-4 rounded-md">
                     <div class="">
-                        <img src="{{ asset('images/avatar_150.jpg') }}" />
+                        @if (Auth::user()->profile->avatar != "" || Auth::user()->profile->avatar != null)
+                            <img src="{{ asset('storage/'.Auth::user()->profile->avatar) }}" class="w-36 h-36 rounded-full" />
+                        @else
+                            <img src="{{ asset('images/avatar_150.jpg') }}" />
+                        @endif
                     </div>
                     <div class="mt-2">
-                        <form enctype="multi-part/form-data" class="flex flex-col items-center">
-                            <input type="file" class="text-sm border-0 border-gray-500
+                        <form enctype="multipart/form-data" action="{{ route('staff.profile.myprofile.update_avatar') }}"  method="POST" class="flex flex-col items-center">
+                            @csrf
+                            <input type="file" name="photo" class="text-sm border-0 border-gray-500
                                                      items-center 
                                                      justify-center w-3/5" />
+                            @error('photo')
+                                <span class="text-red-700 text-sm mx-[10%]">
+                                    {{$message}}
+                                </span>
+                            @enderror
+                            
 
                             <div class="py-2">
                                     <button type="submit" class="px-4 py-1 text-sm 
@@ -31,8 +42,8 @@
             </div>
             <div class="flex flex-col justify-center md:border rounded-md md:w-[70%] py-2 px-4">
                     <div class="flex justify-end px-4">
-                            <a href="#" class="border px-4 py-1 rounded-md ring-0 
-                                 border-gray-500 bg-gray-100 hover:shadow-md text-sm">
+                            <a href="{{ route('staff.profile.myprofile.edit') }}" class="border px-4 py-1 rounded-md ring-0 
+                                 border-gray-500 bg-gray-100 hover:shadow-md text-xs md:text-sm hover:font-semibold">
                                 Edit
                             </a>
                     </div>

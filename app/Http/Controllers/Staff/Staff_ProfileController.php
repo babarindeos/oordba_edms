@@ -137,4 +137,60 @@ class Staff_ProfileController extends Controller
     {
         return view('staff.profile.myprofile');
     }
+
+    public function edit()
+    {
+        return view('staff.profile.edit');
+    }
+
+    public function update(Request $request)
+    {
+        $formFields = $request->validate([
+            'designation' => 'required',
+            'phone' => 'required'
+        ]);
+
+        $profile = Profile::where('user_id', auth()->user()->id)->first();
+        
+        $profile->designation = $formFields['designation'];
+        $profile->phone = $formFields['phone'];
+        $profile->update();
+
+        return redirect()->route('staff.profile.myprofile');
+    }
+
+    public function update_avatar(Request $request)
+    {
+        $formFields = $request->validate([
+            'photo' => 'required|file|mimes:png,jpg,jpeg|max:500'
+        ]);
+
+        try
+        {
+            $update = '';
+            if ($request->hasFile('photo'))
+            {
+                $filename = auth()->user()->id;
+                $avatar_file = $request->file('photo');
+                $new_filename = $filename.'.'.$avatar_file->getClientOriginalExtension();
+                
+                $update = $avatar_file->storeAs('avatars', $new_filename);
+
+                if ($update != '')
+                {
+                    $profile = Profile::where('user_id', auth()->user()->id)->first();
+                    $profile->avatar = $update;
+                    $profile->save();
+                }
+
+                
+            }
+        }
+        catch(\Exception $e)
+        {
+
+        }
+        
+        return redirect()->back();
+    }
 }
