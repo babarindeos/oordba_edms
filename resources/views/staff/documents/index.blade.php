@@ -14,7 +14,7 @@
         <section class="flex flex-col py-1  mt-4 justif-end">
             <div class="flex justify-end border border-0">
             
-                <input type="text" name="document_title" class="w-3/5 md:w-2/5 border border-1 border-gray-400 bg-gray-50
+                <input type="text" name="search" class="w-3/5 md:w-2/5 border border-1 border-gray-400 bg-gray-50
                             p-2 rounded-md 
                             focus:outline-none
                             focus:border-blue-500 
@@ -31,12 +31,14 @@
         <section class="flex flex-col py-2 ">
             <table class="table-auto border-collapse border border-1 border-gray-200" 
                         >
-                <tr class="bg-gray-200">
-                    <td class="text-center font-semibold py-2 w-16">SN</td>
-                    <td class="font-semibold py-2">Documents</td>
-                    <td class="font-semibold py-2">Date Created</td>
-                    
-                </tr>
+                <thead>
+                    <tr class="bg-gray-200">
+                        <th class="text-center font-semibold py-2 w-16">SN</th>
+                        <th class="font-semibold py-2 text-left">Documents</th>
+                        <th class="font-semibold py-2 text-left">Date Created</th>
+                        
+                    </tr>
+                </thead>
                 <tbody>
                     @php
                         $counter = ($documents->currentPage() - 1) * $documents->perPage();
@@ -121,3 +123,18 @@
     </div>
     
     </x-staff-layout>
+
+<script>
+    $(document).ready(function() {
+        $("input[name='search']").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            
+            $("table tbody tr").filter(function() {
+                // Get the text content excluding the title link
+                // Get the text content excluding the title link
+                var rowText = $(this).find("td").not(":first").text().toLowerCase();
+                $(this).toggle(rowText.indexOf(value) > -1 || $(this).find("td").length === 1); // Keep the heading row visible
+            });
+        });
+    });
+</script>

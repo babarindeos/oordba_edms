@@ -116,7 +116,18 @@ class Staff_WorkflowController extends Controller
 
          //dd(auth()->user()->id);
          //dd(Auth::user()->id);
-         if ($staff->user_id == auth()->user()->id)
+         if ($staff == null || $staff=="")
+         {
+            $data = [
+                'error' => true,
+                'status' => 'fail',
+                'message' => "There's no Staff with that File No"
+            ];
+
+            $staff = null;
+            return redirect()->back()->with($data);
+         }
+         else if ($staff->user_id == auth()->user()->id)
          {
              $data = [
                 'error' => true,

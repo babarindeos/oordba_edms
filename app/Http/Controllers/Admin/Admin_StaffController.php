@@ -51,6 +51,7 @@ class Admin_StaffController extends Controller
             'firstname' => ['required', 'string'],
             'middlename' => ['required', 'string'],            
             'email' => 'required|email|unique:users,email',
+            'role' => 'required | string'
         ]);
 
 
@@ -63,7 +64,6 @@ class Admin_StaffController extends Controller
                 'status' => 'fail',
                 'message' => 'A Staff with the Staff No. already exist'
             ];
-
 
             return redirect()->back()->with($data);
         }
@@ -97,9 +97,8 @@ class Admin_StaffController extends Controller
                 'role' => 'staff'
             ];
 
-            $createUser = User::create($userData);
-
             
+            $createUser = User::create($userData);           
 
 
             if ($createUser){                      

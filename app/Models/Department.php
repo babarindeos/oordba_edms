@@ -18,4 +18,11 @@ class Department extends Model
     public function ministry(){
         return $this->belongsTo(Ministry::class);
     }
+
+    public function staff()
+    {
+        return $this->hasMany(Staff::class, 'department_id', 'id');
+    }
+
+   
 }

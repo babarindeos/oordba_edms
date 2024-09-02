@@ -22,7 +22,8 @@ class Staff_AuthController extends Controller
         $password = $request->input('password');
         //dd($password);
         
-        if (Auth::attempt(['email'=>$email, 'password'=>$password, 'role'=>'staff' ])){
+        if (Auth::attempt(['email'=>$email, 'password'=>$password, 'role'=>'staff' ]) ||
+            Auth::attempt(['email'=>$email, 'password'=>$password, 'role'=>'manager'])){
             $request->session()->regenerate();
 
             return redirect()->route('staff.dashboard.index');

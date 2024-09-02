@@ -1,7 +1,7 @@
 <x-admin-layout>
     <div class="container">
         <!-- page header //-->
-        <section class="flex flex-col w-[95%] md:w-[95%] py-8 px-4 border-red-900 mx-auto">
+        <section class="flex flex-col w-[95%] md:w-[95%] py-2 mt-6 px-4 border-red-900 mx-auto">
         
             <div class="flex border-b border-gray-300 py-2 justify-between">
                     <div >
@@ -9,23 +9,44 @@
                     </div>
                     <div>
                             <a href="{{ route('admin.departments.create') }}" class="bg-green-600 text-white py-2 px-4 
-                                            rounded-lg text-sm hover:bg-green-500">New Department & Agency</a>
+                                            rounded-lg text-xs md:text-sm hover:bg-green-500">New Department & Agency</a>
                     </div>
             </div>
         </section>
         <!-- end of page header //-->
 
+
+
         @if (count($departments) > 0)
+                <section class="flex flex-col py-2 px-2 justify-end w-[93%] mx-auto md:px-1">
+                    <div class="flex justify-end border border-0">
+                    
+                        <input type="text" name="search" class="w-4/5 md:w-2/5 border border-1 border-gray-400 bg-gray-50
+                                    p-2 rounded-md 
+                                    focus:outline-none
+                                    focus:border-blue-500 
+                                    focus:ring
+                                    focus:ring-blue-100" placeholder="Search"                
+                                
+                                    style="font-family:'Lato';font-size:16px;font-weight:500;"                                                                  
+                        
+                        />  
+                    </div>
+                    
+                </section>
+
                 <section class="flex flex-col w-[95%] md:w-[95%] mx-auto px-4">
                     <table class="table-auto border-collapse border border-1 border-gray-200" 
                                 >
-                        <tr class="bg-gray-200">
-                            <td class="text-center font-semibold py-2 w-16">SN</td>
-                            <td class="font-semibold py-2">Ministry</td>
-                            <td class="font-semibold py-2">Department Name</td>
-                            <td class="font-semibold py-2">Department Code</td>
-                            <td class="font-semibold py-2 text-center">Action</td>
-                        </tr>
+                        <thead>
+                            <tr class="bg-gray-200">
+                                <th class="text-center font-semibold py-2 w-16">SN</th>
+                                <th class="font-semibold py-2 text-left">Ministry</th>
+                                <th class="font-semibold py-2 text-left">Department Name</th>
+                                <th class="font-semibold py-2 text-left">Department Code</th>
+                                <th class="font-semibold py-2 text-center">Action</th>
+                            </tr>
+                        </thead>
                         <tbody>
                             @php
                                 $counter = ($departments->currentPage() -1 ) * $departments->perPage();
@@ -34,8 +55,17 @@
                                 @foreach ($departments as $department)
                                 <tr class="border border-b border-gray-200">
                                     <td class='text-center py-4'>{{ ++$counter }}.</td>
-                                    <td>{{ $department->ministry->name }} <br/><small>({{$department->ministry->code}})</small></td>
-                                    <td>{{ $department->department_name }}</td>
+                                    <td>
+                                        {{ $department->ministry->name }} <small>({{$department->ministry->code}})</small>
+                                        
+                                    </td>
+                                    <td>
+                                        {{ $department->department_name }}
+                                        <div class="text-sm">
+                                            Staff ({{ $department->staff->count()}})
+                                       </div>
+                                    
+                                    </td>
                                     <td>{{ $department->department_code }}</td>
                                     <td class="text-center">
                                         <span class="text-sm">
@@ -73,3 +103,16 @@
         
     </div>
 </x-admin-layout>
+
+<script>
+    $(document).ready(function(){
+         $("input[name='search']").on('keyup', function(){
+                var value = $(this).val().toLowerCase();
+                
+                $("table tbody tr").filter(function(){
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1 );
+                });
+         });
+    });
+
+</script>

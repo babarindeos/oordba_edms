@@ -11,6 +11,8 @@ use App\Http\Controllers\Admin\Admin_DepartmentController;
 use App\Http\Controllers\Admin\Admin_StaffController;
 use App\Http\Controllers\Admin\Admin_DeanController;
 use App\Http\Controllers\Admin\Admin_MinistryController;
+use App\Http\Controllers\Admin\Admin_DocumentController;
+use App\Http\Controllers\Admin\Admin_ProfileController;
 
 use App\Http\Controllers\Staff\Staff_AuthController;
 use App\Http\Controllers\Staff\Staff_DashboardController;
@@ -20,6 +22,9 @@ use App\Http\Controllers\Staff\Staff_GeneralMessageController;
 use App\Http\Controllers\Staff\Staff_PrivateMessageController;
 
 use App\Http\Controllers\Staff\Staff_ProfileController;
+
+use App\Http\Controllers\Admin\Admin_TrackerController;
+use App\Http\Controllers\Admin\Admin_AnalyticsController;
 
 
 /*
@@ -86,6 +91,8 @@ Route::prefix('staff')->middleware(['auth', 'staff'])->group(function(){
     Route::post('/profile/myprofile/update', [Staff_ProfileController::class, 'update'])->name('staff.profile.myprofile.update');
 
     Route::post('/profile/myprofile/update_avatar', [Staff_ProfileController::class, 'update_avatar'])->name('staff.profile.myprofile.update_avatar');
+    
+    Route::get('/profile/user/{fileno}', [Staff_ProfileController::class, 'user_profile'])->name('staff.profile.user_profile');
 });
 
 
@@ -112,6 +119,7 @@ Route::prefix('admin')->middleware(['auth','admin'])->group(function(){
     Route::get('/ministries/create', [Admin_MinistryController::class, 'create'])->name('admin.ministries.create');
     Route::post('/ministries/store', [Admin_MinistryController::class, 'store'])->name('admin.ministries.store');
     
+    Route::get('/ministries/{ministry}/show', [Admin_MinistryController::class, 'show'])->name('admin.ministries.show');
     Route::get('/ministries/{ministry}/edit', [Admin_MinistryController::class, 'edit'])->name('admin.ministries.edit');
     Route::post('/ministries/{ministry}/update', [Admin_MinistryController::class, 'update'])->name('admin.ministries.update');
 
@@ -139,6 +147,18 @@ Route::prefix('admin')->middleware(['auth','admin'])->group(function(){
     Route::get('staff/{staff}/edit', [Admin_StaffController::class, 'edit'])->name('admin.staff.edit');
     Route::post('staff/{staff}/update', [Admin_StaffController::class, 'update'])->name('admin.staff.update');
 
+    // Document
+    Route::get('documents', [Admin_DocumentController::class, 'index'])->name('admin.documents.index');
+    Route::get('document_details/{document}', [Admin_DocumentController::class, 'show'])->name('admin.documents.show');
+
+    // User Profile
+    Route::get('/profile/user/{fileno}', [Admin_ProfileController::class, 'user_profile'])->name('admin.profile.user_profile');
+
+    // Tracker
+    Route::get('tracker', [Admin_TrackerController::class, 'index'])->name('admin.tracker.index');
+    Route::get('analytics', [Admin_AnalyticsController::class, 'index'])->name('admin.analytics.index');
+    Route::post('tracker', [Admin_TrackerController::class, 'index'])->name('admin.tracker.index');
+
 
     // Deans
     Route::get('deans', [Admin_DeanController::class, 'index'])->name('admin.deans.index');
@@ -147,6 +167,8 @@ Route::prefix('admin')->middleware(['auth','admin'])->group(function(){
 
     Route::get('dean/assign_dean', [Admin_DeanController::class, 'assign_dean'])->name('admin.deans.assign_dean');
     Route::post('dean/assign_dean', [Admin_DeanController::class, 'store_assign_dean'])->name('admin.deans.store_assign_dean');
+
+    
 });
 
 

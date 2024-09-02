@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Profile;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Staff;
 
 class Staff_ProfileController extends Controller
 {
@@ -192,5 +193,12 @@ class Staff_ProfileController extends Controller
         }
         
         return redirect()->back();
+    }
+
+    public function user_profile($fileno)
+    {
+        $userprofile = Staff::where('fileno', $fileno)->first();
+        
+        return view('staff.profile.user_profile', compact('userprofile'));
     }
 }

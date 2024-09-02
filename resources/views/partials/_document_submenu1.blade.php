@@ -4,7 +4,7 @@
             My Documents
     </a>
 
-     @if (Auth::user()->role === 'Manager')
+     @if (Auth::user()->role === 'manager')
 
         <div class="border border-green-600 py-2 px-4 rounded-md mt-1 font-semibold 
                         hover:bg-green-600 hover:text-white hover:shadow-md">

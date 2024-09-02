@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Ministry;
+use App\Models\Department;
 use Illuminate\Validation\Rule;
 
 class Admin_MinistryController extends Controller
@@ -65,6 +66,13 @@ class Admin_MinistryController extends Controller
         }
 
         return redirect()->back()->with($data);
+    }
+
+    public function show(Ministry $ministry)
+    {
+        $departments = Department::where('ministry_id', $ministry->id)->paginate(2);
+        
+        return view('admin.ministries.show', compact('ministry','departments'));
     }
 
 

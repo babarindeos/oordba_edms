@@ -34,4 +34,9 @@ class Staff extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function profile()
+    {
+        return $this->hasOne(Profile::class, 'user_id', 'user_id');
+    }
 }

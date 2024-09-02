@@ -39,8 +39,13 @@ class Staff_DashboardController extends Controller
                                                        ->where('read', false)
                                                        ->orderBy('id', 'desc')->paginate(5);
 
-        $recent_workflows = Workflow::latest()->take(5)->get();        
+        $recent_workflows = Workflow::latest()->take(5)->get();      
+        
+        $current_user =  Auth::user()->id;
+        //dd($current_user);
 
+        $recent_workflows = Workflow::where('recipient_id','=', $current_user)->latest()->take(5)->get();
+        
         return view('staff.dashboard', compact('workflow_notifications', 'recent_workflows', 'private_message_notifications'));
 
     }

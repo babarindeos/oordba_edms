@@ -234,6 +234,37 @@
                         </div><!-- end of email //-->
 
 
+                        <!-- Role //-->
+                        <div class="flex flex-col border-red-900 w-[80%] md:w-[60%] py-2">
+                                
+                                
+                            <select name="role" class="border border-1 border-gray-400 bg-gray-50
+                                                                     w-full p-4 rounded-md 
+                                                                     focus:outline-none
+                                                                     focus:border-blue-500 
+                                                                     focus:ring
+                                                                     focus:ring-blue-100"
+                                                                     
+                                                                     
+                                                                     style="font-family:'Lato';font-size:16px;font-weight:500;"
+                                                                     required
+                                                                     >
+                                                                    <option value=''>-- Select Role --</option>
+                                                                        <option value='staff'>Staff</option> 
+                                                                        <option value='manager'>Manager</option>                                                                   
+                                                                    </select>
+
+                                                                     @error('role')
+                                                                        <span class="text-red-700 text-sm">
+                                                                            {{$message}}
+                                                                        </span>
+                                                                     @enderror
+                            
+                        </div>                        
+                        <!-- end of Role //-->
+
+
+
 
 
 

@@ -26,9 +26,9 @@
                         <a  href='{{ route('admin.ministries.index') }}' class="flex font-semibold items-center text-white hover:border-b-yellow-100 hover:border-b-4 mx-3 ">Ministries</a>
                         <a  href='{{ route('admin.departments.index') }}' class="flex font-semibold items-center text-white hover:border-b-yellow-100 hover:border-b-4 mx-3 ">D&As</a>
                         <a  href='{{ route('admin.staff.index') }}' class="flex font-semibold items-center text-white hover:border-b-yellow-100 hover:border-b-4 mx-3 ">Users</a>
-                        <a  href='{{ route('admin.deans.index') }}' class="flex font-semibold items-center text-white hover:border-b-yellow-100 hover:border-b-4 mx-3 ">Documents</a>
-                        <a  href='/login' class="flex font-semibold items-center text-white hover:border-b-yellow-100 hover:border-b-4 mx-3 ">Reports</a>
-                        <a  href='/login' class="flex font-semibold items-center text-white hover:border-b-yellow-100 hover:border-b-4 mx-3 ">Analytics</a>
+                        <a  href='{{ route('admin.documents.index') }}' class="flex font-semibold items-center text-white hover:border-b-yellow-100 hover:border-b-4 mx-3 ">Documents</a>
+                        <a  href='{{ route('admin.tracker.index') }}' class="flex font-semibold items-center text-white hover:border-b-yellow-100 hover:border-b-4 mx-3 ">Tracker</a>
+                        <a  href='{{ route('admin.analytics.index')}}' class="flex font-semibold items-center text-white hover:border-b-yellow-100 hover:border-b-4 mx-3 ">Analytics</a>
                         <form action="{{ route('admin.auth.logout') }}" method="POST">
                             @csrf
                             

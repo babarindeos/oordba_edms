@@ -323,7 +323,9 @@
                                                                                                                                        
                                                                 </div>
                                                                 <div class="flex flex-col py-2 w-full">
-                                                                    <div class="font-bold">{{ $contributor->user->staff->surname }}  ({{ $contributor->user->staff->firstname }})</div>
+                                                                    <a class="font-bold hover:underline" href="{{ route('staff.profile.user_profile', ['fileno'=>$contributor->user->staff->fileno]) }}">
+                                                                        {{ $contributor->user->staff->surname }}  ({{ $contributor->user->staff->firstname }})
+                                                                    </a>
                                                                     <div>{{ $contributor->user->staff->department->department_name }}  ({{ $contributor->user->staff->department->department_code }})</div>
                                                                     <div>{{ $contributor->user->staff->department->ministry->name }} ({{ $contributor->user->staff->department->ministry->code }})</div>
                                                                     <div class="w-full">
@@ -386,9 +388,9 @@
                                                                        
                                                                 </div>
                                                                 <div class="px-3 py-1 rounded-md bg-gray-100 w-full">
-                                                                        <div class="font-semibold text-sm">
+                                                                        <a href="{{ route('staff.profile.user_profile', ['fileno'=>$message->sender->staff->fileno]) }}"  class="font-semibold text-sm hover:underline">
                                                                                 {{ $message->sender->surname }} {{ $message->sender->firstname }}
-                                                                        </div>
+                                                                        </a>
                                                                         <div class="text-xs">
                                                                                 {{ $message->created_at->format('l jS F, Y @ g:i a') }}
                                                                         </div>

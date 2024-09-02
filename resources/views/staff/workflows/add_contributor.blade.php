@@ -134,7 +134,14 @@
                                                                                     <div class="flex flex-row">
                                                                                             <div class="py-2 px-4">
                                                                                                     <div class="rounded-full w-50 h-50 bg-gray-200">
-                                                                                                            Picture
+                                                                                                        @if ($staff->profile!=null && $staff->profile->avatar!="" )
+                                                                            
+                                                                                                        <img src="{{ asset('storage/'.$staff->profile->avatar)}}" class='w-12 h-10 rounded-full' />
+                                                                                                    
+                                                                                                        @else
+                                                                                                            <img class="w-12" src="{{ asset('images/avatar_64.jpg')}}" />  
+                                                                                                        @endif
+                                                                                                   
                                                                                                     </div>
                                                                                             </div>
                                                                                             <div>
@@ -210,7 +217,14 @@
                                         <div class="w-full ">
                                                 <div class="flex flex-row w-full text-sm border-b ">
                                                         <div class="flex flex-col justify-center px-2 py-2 items-center">
-                                                                <img class="w-12" src="{{ asset('images/avatar_64.jpg')}}" />                                                                
+                                                                
+                                                                @if ($contributor->user->profile!=null && $contributor->user->profile->avatar!="" )
+                                                                            
+                                                                    <img src="{{ asset('storage/'.$contributor->user->profile->avatar)}}" class='w-12 h-10 rounded-full' />
+                                                            
+                                                                @else
+                                                                    <img class="w-12" src="{{ asset('images/avatar_64.jpg')}}" />  
+                                                                @endif                                                         
                                                         </div>
                                                         <div class="flex flex-col py-2 w-full">
                                                             <div class="font-bold">{{ $contributor->user->staff->surname}}  {{ $contributor->user->staff->firstname}}</div>
