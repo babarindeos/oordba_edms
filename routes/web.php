@@ -27,6 +27,9 @@ use App\Http\Controllers\Admin\Admin_TrackerController;
 use App\Http\Controllers\Admin\Admin_AnalyticsController;
 
 
+use App\Http\Controllers\Staff\Staff_CategoryController;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -93,6 +96,10 @@ Route::prefix('staff')->middleware(['auth', 'staff'])->group(function(){
     Route::post('/profile/myprofile/update_avatar', [Staff_ProfileController::class, 'update_avatar'])->name('staff.profile.myprofile.update_avatar');
     
     Route::get('/profile/user/{fileno}', [Staff_ProfileController::class, 'user_profile'])->name('staff.profile.user_profile');
+    
+    // Categories
+    Route::get('/categories/create', [Staff_CategoryController::class, 'create'])->name('staff.categories.create');
+    Route::post('/categories/store', [Staff_CategoryController::class, 'store'])->name('staff.categories.store');
 });
 
 

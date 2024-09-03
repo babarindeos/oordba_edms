@@ -12,6 +12,7 @@ class Document extends Model
     protected $fillable = [
        'uuid',
        'title',
+       'category_id',
        'document',
        'comment',
        'uploader',

@@ -13,6 +13,7 @@ use App\Models\Workflow;
 use App\Models\FlowContributor;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\DB;
+use App\Models\Category;
 
 
 class Staff_DocumentController extends Controller
@@ -37,7 +38,23 @@ class Staff_DocumentController extends Controller
 
     public function create()
     {
-        return view('staff.documents.create');
+        // check if the current user has categories if not
+        // create a general category and return it
+        $userHasCategories = Category::where('owner', Auth::id())->exists();
+
+        if (!$userHasCategories)
+        {
+            $category = new Category();
+            $category->name = "General";
+            $category->owner = Auth::id();
+            $category->save();
+        }
+
+        $userCategories = Category::where('owner', Auth::id())->get();
+
+        
+
+        return view('staff.documents.create')->with('categories', $userCategories);
     }
 
     
@@ -45,6 +62,7 @@ class Staff_DocumentController extends Controller
     {
         $formFields = $request->validate([
             'document_title' => 'required|string',
+            'category' => 'required',
             'document' => 'required|file|mimes:pdf,doc,docx,jpg,jpeg,png',
             'comment' => 'string|max:140'
         ]);
@@ -84,12 +102,16 @@ class Staff_DocumentController extends Controller
             $store_data = [
                 'uuid' => $uuid,
                 'title' => $formFields['document_title'],
+                'category_id' =>$formFields['category'],
                 'document' => 'documents/'.$new_filename,
                 'comment' => $formFields['comment'],
                 'uploader' => auth()->user()->id,
                 'filesize' => $document_size,
                 'filetype' => $document_type
             ];
+
+            
+
 
             try
             {

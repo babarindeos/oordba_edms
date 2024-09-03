@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->uuid('uuid');
             $table->string('title');
+            $table->unsignedBigInteger('category_id');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->string('document');
             $table->text('comment')->nullable();
             $table->unsignedBigInteger('uploader');

@@ -19,7 +19,7 @@
         
 
         @auth
-            @if (Auth::user() && Auth::user()->role==='staff')
+            @if (Auth::user() && (Auth::user()->role==='staff'  || Auth::user()->role==='manager') )
                 
                 <div class="hidden md:flex flex-row items-center px-1"> 
                         <a  href="{{ route('staff.dashboard.index') }}" class="flex font-semibold items-center text-white hover:border-b-yellow-100 hover:border-b-4 mx-3 ">Dashboard</a>

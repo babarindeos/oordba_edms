@@ -53,6 +53,42 @@
                         
                     </div><!-- end of document title //-->
 
+                    <!-- category //-->
+                    <div class="flex flex-col w-[80%] md:w-[60%] py-3">
+                        <select name="category" class="border border-1 border-gray-400 bg-gray-50
+                                                                     w-full p-4 rounded-md 
+                                                                     focus:outline-none
+                                                                     focus:border-blue-500 
+                                                                     focus:ring
+                                                                     focus:ring-blue-100"
+                                                                     
+                                                                     
+                                                                     style="font-family:'Lato';font-size:16px;font-weight:500;"
+                                                                     required
+                                                                     >
+                                                                        @foreach ($categories as $category)
+                                                                                <option value='{{$category->id}}'>{{$category->name}}</option>
+                                                                        @endforeach
+                                                                        
+
+                                                                    </select>
+                                                                    <div class="text-right text-sm font-normal py-1">
+                                                                        <a class="hover:underline" href="{{ route('staff.categories.create') }}">
+                                                                            Create Category
+                                                                        </a>
+                                                                    </div>
+
+                                                                     @error('category')
+                                                                        <span class="text-red-700 text-sm">
+                                                                            {{$message}}
+                                                                        </span>
+                                                                     @enderror
+                            
+                    </div>                        
+                    <!-- end of Category //-->
+
+
+                    <!-- document file //-->
                     <div class="flex flex-col border-red-900 w-[80%] md:w-[60%] py-2">
                                 
                                 
@@ -75,6 +111,7 @@
                          @enderror
                         
                     </div>
+                    <!-- end of document file //-->
                    
                     <!-- end of upload //-->
 

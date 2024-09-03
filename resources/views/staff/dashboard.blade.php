@@ -19,7 +19,7 @@
         
 
         @if (count($workflow_notifications) > 0 )
-        <div class="md:flex-1">
+        <div class="md:flex-1 border-0">
             <section class="py-8 mt-2">
                     <div class="text-lg font-semibold text-gray-600 border-b border-gray-200 ">
                         Workflow Notifications ({{ $workflow_notifications->count() }})
@@ -54,7 +54,7 @@
 
         
         @if (count($private_message_notifications) > 0 )
-        <div class="md:flex-1">
+        <div class="md:flex-1 border-0">
             <section class="py-8 mt-2">
                     <div class="text-lg font-semibold text-gray-600 border-b border-gray-200 ">
                         Message Notifications ({{ $private_message_notifications->count() }})
@@ -85,40 +85,48 @@
         </div>
         @endif
 
+
+
+        <!-- recent workflows //-->
+        <div class="md:flex-1 border-0">
+                <div class="text-lg font-semibold text-gray-600 border-b border-gray-200 mt-10">
+                    Recent Workflows
+                </div>
+                <div>
+                    <ul class="list-disc  px-10">
+                    @foreach ($recent_workflows as $workflow)
+                            @if ($workflow->sender_id != Auth::user()->id)
+                                <li class="py-3 border-b border-gray-100">
+                                    <a title="{{$workflow->document->title}}" class="hover:underline" href="{{ route('staff.workflows.flow', ['document'=>$workflow->document->id]) }}" >
+                                    
+                                            <div class="font-medium text-gray-700">
+                                            {{$workflow->document->title}}
+                                            </div>
+                                            <div class="text-xs">
+                                                from {{ $workflow->sender->surname}} @ 
+                                                {{ $workflow->created_at->format('l jS F, Y g:i a')}}
+                                            </div>
+                                    </a>
+                                </li>
+                            @endif
+                    @endforeach
+                    </ul>
+                    <div class="py-2">
+                        {{ $workflow_notifications->links() }}
+                    </div>
+                </div>
+
+        </div>
+        <!-- end of recent workflows //-->
+
+
+
+
         
 
     </div>
 
 
-    <section class="py-8 mt-2">
-            <div class="text-lg font-semibold text-gray-600 border-b border-gray-200 ">
-                Recent Workflows
-            </div>
-            <div>
-                <ul class="list-disc  px-10">
-                   @foreach ($recent_workflows as $workflow)
-                        @if ($workflow->sender_id != Auth::user()->id)
-                            <li class="py-3 border-b border-gray-100">
-                                <a title="{{$workflow->document->title}}" class="hover:underline" href="{{ route('staff.workflows.flow', ['document'=>$workflow->document->id]) }}" >
-                                
-                                        <div class="font-medium text-gray-700">
-                                        {{$workflow->document->title}}
-                                        </div>
-                                        <div class="text-xs">
-                                            from {{ $workflow->sender->surname}} @ 
-                                            {{ $workflow->created_at->format('l jS F, Y g:i a')}}
-                                        </div>
-                                </a>
-                            </li>
-                        @endif
-                   @endforeach
-                </ul>
-                <div class="py-2">
-                       {{ $workflow_notifications->links() }}
-                </div>
-
-           </div>
-    </section>
     
 </div>
 
