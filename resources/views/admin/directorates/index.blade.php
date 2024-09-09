@@ -1,7 +1,7 @@
 <x-admin-layout>
-    <div class="container">
+    <div class="flex w-full flex-col border-0">
         <!-- page header //-->
-        <section class="flex flex-col w-[95%] md:w-[95%] py-2 mt-6 px-4 border-red-900 mx-auto">
+        <section class="flex flex-col w-[95%] md:w-[95%] py-2 mt-6 px-4 mx-auto">
         
             <div class="flex border-b border-gray-300 py-2 justify-between">
                     <div >
@@ -57,8 +57,10 @@
                                         {{ $directorate->name }}
                                 </a>
                                 <div class="flex text-sm">
-                                    {{-- <div>Departments ({{ $directorates->department->count() }})</div>  --}}
-                                    
+
+                                    {{-- 
+                                        <div>Departments ({{ $directorates->department->count() }})</div>  
+                                    --}}                                   
                                     
                                 </div>
                             

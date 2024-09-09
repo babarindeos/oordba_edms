@@ -9,7 +9,9 @@
                     </div>
                     <div>
                             <a href="{{ route('admin.departments.create') }}" class="bg-green-600 text-white py-2 px-4 
-                                            rounded-lg text-xs md:text-sm hover:bg-green-500">New Department & Agency</a>
+                                            rounded-lg text-xs md:text-sm hover:bg-green-500">
+                                            <i class="fa-regular fa-building mr-2 opacity-50 hover:opacity-100"></i>
+                                            New Department</a>
                     </div>
             </div>
         </section>
@@ -41,7 +43,7 @@
                         <thead>
                             <tr class="bg-gray-200">
                                 <th class="text-center font-semibold py-2 w-16">SN</th>
-                                <th class="font-semibold py-2 text-left">Ministry</th>
+                                <th class="font-semibold py-2 text-left">Directorate</th>
                                 <th class="font-semibold py-2 text-left">Department Name</th>
                                 <th class="font-semibold py-2 text-left">Department Code</th>
                                 <th class="font-semibold py-2 text-center">Action</th>
@@ -96,7 +98,7 @@
                 </section>
         @else
                 <section class="flex flex-col w-[95%] md:w-[95%] mx-auto px-4">
-                        No Department or Agency
+                        There is currently No Department 
                 </section>
         @endif
         

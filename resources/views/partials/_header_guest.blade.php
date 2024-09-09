@@ -5,7 +5,7 @@
     <div class="flex flex-row justify-between py-2">
         <div class="flex">
             <!-- logo //-->
-            <div class="flex flex-row px-2 md:px-4 py-2">
+            <div class="flex flex-row px-2 md:px-6 py-2">
                 <img src="{{ asset('images/logo.png')}}" />
             </div>
             <!-- end of logo //-->
