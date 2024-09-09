@@ -10,13 +10,13 @@ class Department extends Model
     use HasFactory;
 
     protected $fillable = [
-        'ministry_id',
+        'directorate_id',
         'department_name',
         'department_code'
     ];
 
-    public function ministry(){
-        return $this->belongsTo(Ministry::class);
+    public function directorate(){
+        return $this->belongsTo(Directorate::class);
     }
 
     public function staff()

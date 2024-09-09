@@ -11,8 +11,8 @@
             <!-- end of logo //-->
             <!-- Name //-->
             <div class="flex flex-col item-center justify-center">
-                    <div class="text-white font-bold text-3xl font-serif">GoviFlow</div>
-                    <div class="text-white font-semibold font-serif text-xl">Complete Work Flow</div>
+                    <div class="text-white font-bold text-2xl font-serif">OORBDA EDMS</div>
+                    <div class="text-white font-semibold font-serif text-md opacity-70">Complete Work Flow</div>
             </div>
             <!-- end of name //-->
         </div>
@@ -23,8 +23,8 @@
                 
                 <div class="hidden md:flex flex-row items-center px-1"> 
                         <a  href='{{ route('admin.dashboard.index') }}' class="flex font-semibold items-center text-white hover:border-b-yellow-100 hover:border-b-4 mx-3 ">Dashboard</a>
-                        <a  href='{{ route('admin.ministries.index') }}' class="flex font-semibold items-center text-white hover:border-b-yellow-100 hover:border-b-4 mx-3 ">Ministries</a>
-                        <a  href='{{ route('admin.departments.index') }}' class="flex font-semibold items-center text-white hover:border-b-yellow-100 hover:border-b-4 mx-3 ">D&As</a>
+                        <a  href='{{ route('admin.directorates.index') }}' class="flex font-semibold items-center text-white hover:border-b-yellow-100 hover:border-b-4 mx-3 ">Directorates</a>
+                        <a  href='{{ route('admin.departments.index') }}' class="flex font-semibold items-center text-white hover:border-b-yellow-100 hover:border-b-4 mx-3 ">Departments</a>
                         <a  href='{{ route('admin.staff.index') }}' class="flex font-semibold items-center text-white hover:border-b-yellow-100 hover:border-b-4 mx-3 ">Users</a>
                         <a  href='{{ route('admin.documents.index') }}' class="flex font-semibold items-center text-white hover:border-b-yellow-100 hover:border-b-4 mx-3 ">Documents</a>
                         <a  href='{{ route('admin.tracker.index') }}' class="flex font-semibold items-center text-white hover:border-b-yellow-100 hover:border-b-4 mx-3 ">Tracker</a>

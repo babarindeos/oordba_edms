@@ -1,4 +1,5 @@
 <x-admin-layout>
+    
     <div class="container mx-auto">
         <!-- page header //-->
         <section class="flex flex-col w-[90%] md:w-[95%] py-8 px-4 border-red-900 mx-auto">
@@ -17,14 +18,14 @@
         <!-- new college form //-->
         <section>
                 <div>
-                    <form  action="{{ route('admin.ministries.store')}} " method="POST" class="flex flex-col mx-auto w-[90%] items-center justify-center">
+                    <form  action="{{ route('admin.directorates.store')}} " method="POST" class="flex flex-col mx-auto w-[90%] items-center justify-center">
                         @csrf
 
                         
 
                         <div class="flex flex-col w-[80%] md:w-[60%] py-2 md:py-4" style="font-family:'Lato'; font-size:18px; font-weight:400;">
-                            <h2 class="font-semibold text-xl py-1" >New Ministry</h2>
-                            Provide Ministry name and code
+                            <h2 class="font-semibold text-xl py-1" >New Directorate</h2>
+                            Provide Directorate name and code
                         </div>
 
 
@@ -41,7 +42,7 @@
                                                                     focus:outline-none
                                                                     focus:border-blue-500 
                                                                     focus:ring
-                                                                    focus:ring-blue-100" placeholder="Ministry name"
+                                                                    focus:ring-blue-100" placeholder="Directorate name"
                                                                     
                                                                     value="{{ old('name') }}"
                                                                     
@@ -67,7 +68,7 @@
                                                                     focus:outline-none
                                                                     focus:border-blue-500 
                                                                     focus:ring
-                                                                    focus:ring-blue-100" placeholder="Ministry code"
+                                                                    focus:ring-blue-100" placeholder="Directorate code"
                                                                     
                                                                     value="{{ old('code') }}"
                                                                     
@@ -87,7 +88,7 @@
                         <div class="flex flex-col border-red-900 w-[80%] md:w-[60%] mt-4">
                             <button type="submit" class="border border-1 bg-gray-400 py-4 text-white 
                                            hover:bg-gray-500
-                                           rounded-md text-lg" style="font-family:'Lato';font-weight:500;">Create Ministry</button>
+                                           rounded-md text-lg" style="font-family:'Lato';font-weight:500;">Create Directorate</button>
                         </div>
                         
                     </form><!-- end of new Ministry form //-->

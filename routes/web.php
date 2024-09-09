@@ -10,7 +10,7 @@ use App\Http\Controllers\Admin\Admin_CollegeController;
 use App\Http\Controllers\Admin\Admin_DepartmentController;
 use App\Http\Controllers\Admin\Admin_StaffController;
 use App\Http\Controllers\Admin\Admin_DeanController;
-use App\Http\Controllers\Admin\Admin_MinistryController;
+use App\Http\Controllers\Admin\Admin_DirectorateController;
 use App\Http\Controllers\Admin\Admin_DocumentController;
 use App\Http\Controllers\Admin\Admin_ProfileController;
 
@@ -120,7 +120,19 @@ Route::prefix('admin')->middleware(['auth','admin'])->group(function(){
     Route::delete('college/{college}/destroy', [Admin_CollegeController::class, 'destroy'])->name('admin.colleges.destroy');
 
 
+    // directorates
+    Route::get('/directorates', [Admin_DirectorateController::class, 'index'])->name('admin.directorates.index');
+    Route::get('/directorates/create', [Admin_DirectorateController::class, 'create'])->name('admin.directorates.create');
+    Route::post('/directorates/store', [Admin_DirectorateController::class, 'store'])->name('admin.directorates.store');
+    
+    Route::get('/directorates/{directorate}/show', [Admin_DirectorateController::class, 'show'])->name('admin.directorates.show');
+    Route::get('/directorates/{directorate}/edit', [Admin_DirectorateController::class, 'edit'])->name('admin.directorates.edit');
+    Route::post('/directorates/{directorate}/update', [Admin_DirectorateController::class, 'update'])->name('admin.directorates.update');
 
+    Route::get('/directorates/{directorate}/destroy', [Admin_DirectorateController::class, 'destroy'])->name('admin.directorates.destroy');
+    Route::post('/directorates/{directorate}/confirm_delete', [Admin_DirectorateController::class, 'confirm_delete'])->name('admin.directorates.confirm_delete');
+
+    
     // ministry
     Route::get('/ministries', [Admin_MinistryController::class, 'index'])->name('admin.ministries.index');
     Route::get('/ministries/create', [Admin_MinistryController::class, 'create'])->name('admin.ministries.create');
@@ -133,8 +145,8 @@ Route::prefix('admin')->middleware(['auth','admin'])->group(function(){
     Route::get('/ministries/{ministry}/destroy', [Admin_MinistryController::class, 'destroy'])->name('admin.ministries.destroy');
     Route::post('/ministries/{ministry}/confirm_delete', [Admin_MinistryController::class, 'confirm_delete'])->name('admin.ministries.confirm_delete');
 
-    
 
+    
     // Department
     Route::get('/departments', [Admin_DepartmentController::class, 'index'])->name('admin.departments.index');
     Route::get('departments/create', [Admin_DepartmentController::class, 'create'])->name('admin.departments.create');
@@ -164,7 +176,7 @@ Route::prefix('admin')->middleware(['auth','admin'])->group(function(){
     // Tracker
     Route::get('tracker', [Admin_TrackerController::class, 'index'])->name('admin.tracker.index');
     Route::get('analytics', [Admin_AnalyticsController::class, 'index'])->name('admin.analytics.index');
-    Route::post('tracker', [Admin_TrackerController::class, 'index'])->name('admin.tracker.index');
+    //Route::post('tracker', [Admin_TrackerController::class, 'index'])->name('admin.tracker.index');
 
 
     // Deans

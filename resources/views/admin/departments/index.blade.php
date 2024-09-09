@@ -5,7 +5,7 @@
         
             <div class="flex border-b border-gray-300 py-2 justify-between">
                     <div >
-                        <h1 class="text-2xl font-semibold font-serif text-gray-800">Departments & Agencies</h1>
+                        <h1 class="text-2xl font-semibold font-serif text-gray-800">Departments </h1>
                     </div>
                     <div>
                             <a href="{{ route('admin.departments.create') }}" class="bg-green-600 text-white py-2 px-4 

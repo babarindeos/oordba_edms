@@ -11,8 +11,8 @@
             <!-- end of logo //-->
             <!-- Name //-->
             <div class="flex flex-col item-center justify-center">
-                    <div class="text-white font-bold text-3xl font-serif">GoviFlow</div>
-                    <div class="text-white font-semibold font-serif text-xl">Complete Work Flow</div>
+                    <div class="text-white font-bold text-2xl font-serif">OORBDA EDMS</div>
+                    <div class="text-white font-semibold font-serif text-md opacity-80">Complete Work Flow</div>
             </div>
             <!-- end of name //-->
         </div>
