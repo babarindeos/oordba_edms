@@ -5,8 +5,8 @@
         
             <div class="flex border-b border-gray-300 py-2 justify-between">
                     <div >
-                        <h1 class="text-2xl font-semibold font-serif text-gray-800">Directorate</h1>
-                        <div>{{ $directorate->name }} ({{ $directorate->code }})</div>
+                        <h1 class="text-2xl font-semibold font-serif text-gray-800">Ministry</h1>
+                        <div>{{ $ministry->name }} ({{ $ministry->code }})</div>
                     </div>
                     
             </div>

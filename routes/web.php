@@ -14,6 +14,12 @@ use App\Http\Controllers\Admin\Admin_DirectorateController;
 use App\Http\Controllers\Admin\Admin_DocumentController;
 use App\Http\Controllers\Admin\Admin_ProfileController;
 
+use App\Http\Controllers\Admin\Admin_TrackerController;
+use App\Http\Controllers\Admin\Admin_AnalyticsController;
+
+
+use App\Http\Controllers\Admin\Admin_DivisionController;
+
 use App\Http\Controllers\Staff\Staff_AuthController;
 use App\Http\Controllers\Staff\Staff_DashboardController;
 use App\Http\Controllers\Staff\Staff_DocumentController;
@@ -23,8 +29,6 @@ use App\Http\Controllers\Staff\Staff_PrivateMessageController;
 
 use App\Http\Controllers\Staff\Staff_ProfileController;
 
-use App\Http\Controllers\Admin\Admin_TrackerController;
-use App\Http\Controllers\Admin\Admin_AnalyticsController;
 
 
 use App\Http\Controllers\Staff\Staff_CategoryController;
@@ -155,7 +159,23 @@ Route::prefix('admin')->middleware(['auth','admin'])->group(function(){
     Route::get('departments/{department}/edit', [Admin_DepartmentController::class, 'edit'])->name('admin.departments.edit');
     Route::post('departments/{department}/update', [Admin_DepartmentController::class, 'update'])->name('admin.departments.update');
 
-    Route::post('departments/{department}/destroy', [Admin_DepartmentController::class, 'destroy'])->name('admin.departments.destroy');
+    Route::get('departments/{department}/destroy', [Admin_DepartmentController::class, 'destroy'])->name('admin.departments.destroy');
+    Route::post('/departments/{department}/confirm_delete', [Admin_DepartmentController::class, 'confirm_delete'])->name('admin.departments.confirm_delete');
+
+
+    // Division
+    Route::get('/divisions', [Admin_DivisionController::class, 'index'])->name('admin.divisions.index');
+    Route::get('divisions/create', [Admin_DivisionController::class, 'create'])->name('admin.divisions.create');
+    Route::post('divisions/store', [Admin_DivisionController::class, 'store'])->name('admin.divisions.store');
+    
+    Route::get('divisions/{division}/show', [Admin_DivisionController::class, 'show'])->name('admin.divisions.show');
+    Route::get('divisions/{division}/edit', [Admin_DivisionController::class, 'edit'])->name('admin.divisions.edit');
+    Route::post('divisions/{division}/update', [Admin_DivisionController::class, 'update'])->name('admin.divisions.update');
+
+    Route::get('divisions/{division}/destroy', [Admin_DivisionController::class, 'destroy'])->name('admin.divisions.destroy');
+    Route::post('/divisions/{division}/confirm_delete', [Admin_DivisionController::class, 'confirm_delete'])->name('admin.divisions.confirm_delete');
+
+    
 
 
     // Staff

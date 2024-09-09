@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\College;
 use App\Models\Department;
 use App\Models\Ministry;
+use App\Models\Directorate;
 
 class Admin_DepartmentController extends Controller
 {
@@ -19,19 +20,21 @@ class Admin_DepartmentController extends Controller
 
     public function create(){
         
-        $ministries = Ministry::orderBy('name', 'asc')->get();
-        return view('admin.departments.create', compact('ministries'));
+        $directorates = Directorate::orderBy('name', 'asc')->get();
+        return view('admin.departments.create', compact('directorates'));
     }
 
     public function store(Request $request){
         
         $formFields = $request->validate([
-            'ministry' => 'required',
+            'directorate' => 'required',
             'department_name' => 'required | string',
             'department_code' => ['required', 'string']
         ]);
 
-        $formFields['ministry_id'] = $formFields['ministry'];
+        $formFields['directorate_id'] = $formFields['directorate'];
+
+        
 
         try{
             $create = Department::create($formFields);
@@ -40,13 +43,13 @@ class Admin_DepartmentController extends Controller
                 $data = [
                     'error' => true,
                     'status' => 'success',
-                    'message' => 'The Department or Agency has been successfully created'
+                    'message' => 'The Department has been successfully created'
                 ];
             }else{
                 $data = [
                     'error' => true,
                     'status' => 'fail',
-                    'message' => 'An error occurred creating the Department or Agency'
+                    'message' => 'An error occurred creating the Department'
                 ];
             }
     
@@ -55,7 +58,7 @@ class Admin_DepartmentController extends Controller
             $data = [
                     'error' => true,
                     'status' => 'fail',
-                    'message' => 'An error occurred creating the Department or Agency'.$e->getMessage()
+                    'message' => 'An error occurred creating the Department'.$e->getMessage()
             ];
         }
         
@@ -68,20 +71,20 @@ class Admin_DepartmentController extends Controller
 
     public function edit(Department $department){
         //$colleges = College::orderBy('college_name', 'asc')->get();
-        $ministries = Ministry::orderBy('name', 'asc')->get();
+        $directorates = Directorate::orderBy('name', 'asc')->get();
         
 
-        return view('admin.departments.edit', compact('ministries', 'department'));
+        return view('admin.departments.edit', compact('directorates', 'department'));
     }
 
     public function update(Request $request, Department $department){
         $formFields = $request->validate([
-            'ministry' => 'required',
+            'directorate' => 'required',
             'department_name' => ['required', 'string'],
             'department_code' => 'required | string'
         ]);
 
-        $formFields['ministry_id'] = $formFields['ministry'];
+        $formFields['directorate_id'] = $formFields['directorate'];
 
         try{
             $update = $department->update($formFields);
@@ -90,13 +93,13 @@ class Admin_DepartmentController extends Controller
                 $data = [
                     'error' => true,
                     'status' => 'success',
-                    'message' => 'The Department or Agency has been successfully updated'
+                    'message' => 'The Department has been successfully updated'
                 ];
             }else{
                 $data = [
                     'error' => true,
                     'status' => 'fail',
-                    'message' => 'An error occurred updating the Department or Agency'
+                    'message' => 'An error occurred updating the Department'
                 ];
             }
         }catch(\Exception $e){
@@ -109,6 +112,19 @@ class Admin_DepartmentController extends Controller
 
         return redirect()->back()->with($data);
         
+    }
+
+
+    public function destroy(Department $department)
+    {
+        
+        return view('admin.departments.destroy', compact('department'));
+
+    }
+
+    public function confirm_delete(Request $request, Department $department)
+    {
+
     }
 
 }

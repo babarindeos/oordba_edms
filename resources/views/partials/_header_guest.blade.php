@@ -3,7 +3,7 @@
 
     <!-- header bar //-->
     <div class="flex flex-row justify-between py-2">
-        <div class="flex">
+        <a href="/" class="flex">
             <!-- logo //-->
             <div class="flex flex-row px-2 md:px-6 py-2">
                 <img src="{{ asset('images/logo.png')}}" />
@@ -12,10 +12,10 @@
             <!-- Name //-->
             <div class="flex flex-col item-center justify-center">
                     <div class="text-white font-bold text-2xl font-serif">OORBDA EDMS</div>
-                    <div class="text-white font-semibold font-serif text-md opacity-80">Complete Work Flow</div>
+                    <div class="text-white font-semibold font-serif text-xs opacity-80">Electronic Document Management System</div>
             </div>
             <!-- end of name //-->
-        </div>
+        </a>
 
         @auth
             <div class="hidden md:flex flex-row items-center px-1"> 

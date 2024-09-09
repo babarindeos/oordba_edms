@@ -68,11 +68,11 @@ class Admin_DirectorateController extends Controller
         return redirect()->back()->with($data);
     }
 
-    public function show(Ministry $ministry)
+    public function show(Directorate $directorate)
     {
-        $departments = Department::where('ministry_id', $ministry->id)->paginate(2);
+        $departments = Department::where('directorate_id', $directorate->id)->paginate(2);
         
-        return view('admin.ministries.show', compact('ministry','departments'));
+        return view('admin.directorates.show', compact('directorate','departments'));
     }
 
 

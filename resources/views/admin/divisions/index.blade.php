@@ -1,15 +1,15 @@
 <x-admin-layout>
-    <div class="flex w-full flex-col border-0">
+    <div class="container">
         <!-- page header //-->
-        <section class="flex flex-col w-[95%] md:w-[95%] py-2 mt-6 px-4 mx-auto">
+        <section class="flex flex-col w-[95%] md:w-[95%] py-2 mt-6 px-4 border-red-900 mx-auto">
         
             <div class="flex border-b border-gray-300 py-2 justify-between">
                     <div >
-                        <h1 class="text-2xl font-semibold font-serif text-gray-800">Directorates</h1>
+                        <h1 class="text-2xl font-semibold font-serif text-gray-800">Divisions</h1>
                     </div>
                     <div>
-                            <a href="{{ route('admin.directorates.create') }}" class="bg-green-600 text-white py-2 px-4 
-                                            rounded-lg text-sm hover:bg-green-500">New Directorate</a>
+                            <a href="{{ route('admin.divisions.create') }}" class="bg-green-600 text-white py-2 px-4 
+                                            rounded-lg text-sm hover:bg-green-500">New Division</a>
                     </div>
             </div>
         </section>
@@ -39,41 +39,45 @@
                 <thead>
                     <tr class="bg-gray-200">
                         <th class="text-center font-semibold py-2 w-16">SN</th>
-                        <th class="font-semibold py-2 text-left">Name</th>
-                        <th class="font-semibold py-2 text-left">Code</th>
+                        <th class="font-semibold py-2 text-left">Department</th>
+                        <th class="font-semibold py-2 text-left">Division Name</th>
+                        <th class="font-semibold py-2 text-left">Division Code</th>
                         <th class="font-semibold py-2 text-center">Action</th>
                     </tr>
                 </head>
                 <tbody>
                     @php
-                        $counter = ($directorates->currentPage() -1) * $directorates->perPage();
+                        $counter = ($divisions->currentPage() -1) * $divisions->perPage();
                     @endphp
                     
-                    @foreach($directorates as $directorate)
+                    @foreach($divisions as $division)
                         <tr class="border border-b border-gray-200 ">
                             <td class='text-center py-4'>{{ ++$counter }}.</td>
                             <td>
-                                <a class="hover:underline" href="{{ route('admin.directorates.show', ['directorate'=>$directorate->id]) }}" >
-                                        {{ $directorate->name }}
+                                        {{ $division->department->department_name }}
+                                        <div class="text-sm">
+                                            {{ $division->department->directorate->name }} ({{ $division->department->directorate->code }})
+                                        </div>
+                            </td>
+                            <td>
+                                <a class="hover:underline" href="{{ route('admin.divisions.show', ['division'=>$division->id]) }}" >
+                                        {{ $division->name }}
                                 </a>
                                 <div class="flex text-sm">
-
-                                    
-                                        <div>Departments ({{ $directorate->department->count() }})</div>  
-                                                                     
+                                    {{-- <div>Departments ({{ $ministry->department->count() }})</div> --}}                                    
                                     
                                 </div>
                             
                             </td>
-                            <td> {{ $directorate->code }}</td>
+                            <td> {{ $division->code }}</td>
                             <td class="text-center">
                                 <span class="text-sm">
                                     <a class="hover:bg-blue-500 bg-blue-400 text-white rounded-md 
-                                              px-4 py-1 text-xs" href="{{ route('admin.directorates.edit', ['directorate'=>$directorate->id])}}">Edit</a>
+                                              px-4 py-1 text-xs" href="{{ route('admin.divisions.edit', ['division'=>$division->id])}}">Edit</a>
                                 </span>
                                 <span> 
                                     <a class="hover:bg-red-500 bg-red-400 text-white rounded-md 
-                                              px-4 py-1 text-xs" href="{{ route('admin.directorates.destroy', ['directorate'=>$directorate->id])}}"
+                                              px-4 py-1 text-xs" href="{{ route('admin.divisions.destroy', ['division'=>$division->id])}}"
                                     >Delete</a>
                                 </span>
                             </td>
@@ -84,7 +88,7 @@
             </table>
 
             <div class="py-2">
-                    {{ $directorates->links() }}
+                    {{ $divisions->links() }}
             </div>
 
 

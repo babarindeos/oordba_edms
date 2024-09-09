@@ -58,7 +58,7 @@
                                 <tr class="border border-b border-gray-200">
                                     <td class='text-center py-4'>{{ ++$counter }}.</td>
                                     <td>
-                                        {{ $department->ministry->name }} <small>({{$department->ministry->code}})</small>
+                                        {{ $department->directorate->name }} <small>({{$department->directorate->code}})</small>
                                         
                                     </td>
                                     <td>

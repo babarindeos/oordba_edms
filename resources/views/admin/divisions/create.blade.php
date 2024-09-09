@@ -5,7 +5,7 @@
             
             <div class="flex border-b border-gray-300 py-2 justify-between">
                     <div >
-                        <h1 class="text-2xl font-semibold font-serif text-gray-800">Departments</h1>
+                        <h1 class="text-2xl font-semibold font-serif text-gray-800">Create Divisions</h1>
                     </div>                
             </div>
             
@@ -15,44 +15,42 @@
 
 
         <!-- new college form //-->
-        <section class="mb-8">
+        <section>
                 <div>
-                    <form  action="{{ route('admin.departments.update', ['department' => $department->id])}} " method="POST" class="flex flex-col mx-auto w-[90%] items-center justify-center">
+                    <form  action="{{ route('admin.divisions.store')}} " method="POST" class="flex flex-col mx-auto w-[90%] items-center justify-center">
                         @csrf
 
                         
 
                         <div class="flex flex-col w-[80%] md:w-[60%] py-2 md:py-4" style="font-family:'Lato'; font-size:18px; font-weight:400;">
-                            <h2 class="font-semibold text-xl py-1" >Edit Department</h2>
-                            Select Directorate and Provide Department full and short names
+                            <h2 class="font-semibold text-xl py-1" >New Division</h2>
+                            Provide Division name and code
                         </div>
 
 
                         @include('partials._session_response')
-
-
-                        <!-- Directorate //-->
+                        
+                        <!-- Department //-->
                         <div class="flex flex-col border-red-900 w-[80%] md:w-[60%] py-2">
                                 
                                 
-                            <select name="directorate" class="border border-1 border-gray-400 bg-gray-50
+                            <select name="department" class="border border-1 border-gray-400 bg-gray-50
                                                                      w-full p-4 rounded-md 
                                                                      focus:outline-none
                                                                      focus:border-blue-500 
                                                                      focus:ring
-                                                                     focus:ring-blue-100"
-                                                                     
+                                                                     focus:ring-blue-100"                                                                                                                                                                                                                                                                                                                                                
                                                                      
                                                                      style="font-family:'Lato';font-size:16px;font-weight:500;"
                                                                      required
                                                                      >
-                                                                    <option value=''>-- Select Directorate --</option>
-                                                                        @foreach($directorates as $directorate)
-                                                                            <option class='py-4' @if ($directorate->id == $department->directorate_id) selected @endif value="{{$directorate->id}}">{{$directorate->name}} ({{$directorate->code}})</option>
+                                                                    <option value=''>-- Select Department --</option>
+                                                                        @foreach($departments as $department)
+                                                                            <option class='py-4' value="{{$department->id}}">{{$department->department_name}} ({{$department->department_code}})</option>
                                                                         @endforeach                                                                    
                                                                     </select>
 
-                                                                     @error('directorate')
+                                                                     @error('department')
                                                                         <span class="text-red-700 text-sm">
                                                                             {{$message}}
                                                                         </span>
@@ -60,73 +58,71 @@
                             
                         </div>
                         
-                        <!-- end of Directorate //-->
+                        <!-- end of Department //-->
 
-                        
-                        
 
-                        <!-- Department long name //-->
+                        <!-- Division name //-->
                         <div class="flex flex-col border-red-900 w-[80%] md:w-[60%] py-3">
                         
                             
-                            <input type="text" name="department_name" class="border border-1 border-gray-400 bg-gray-50
+                            <input type="text" name="name" class="border border-1 border-gray-400 bg-gray-50
                                                                     w-full p-4 rounded-md 
                                                                     focus:outline-none
                                                                     focus:border-blue-500 
                                                                     focus:ring
-                                                                    focus:ring-blue-100" placeholder="Department full name"
+                                                                    focus:ring-blue-100" placeholder="Division name"
                                                                     
-                                                                    value="{{ $department->department_name }}"
+                                                                    value="{{ old('name') }}"
                                                                     
                                                                     style="font-family:'Lato';font-size:16px;font-weight:500;"                                                                     
                                                                     required
                                                                     />  
                                                                                                                                         
 
-                                                                    @error('department_name')
+                                                                    @error('name')
                                                                         <span class="text-red-700 text-sm">
                                                                             {{$message}}
                                                                         </span>
                                                                     @enderror
                             
-                        </div><!-- end of department name //-->
+                        </div><!-- end of division name //-->
 
-                        <!-- Department code //-->
+                        <!-- Division code //-->
                         <div class="flex flex-col border-red-900 w-[80%] md:w-[60%] py-3">
                         
                             
-                            <input type="text" name="department_code" class="border border-1 border-gray-400 bg-gray-50
+                            <input type="text" name="code" class="border border-1 border-gray-400 bg-gray-50
                                                                     w-full p-4 rounded-md 
                                                                     focus:outline-none
                                                                     focus:border-blue-500 
                                                                     focus:ring
-                                                                    focus:ring-blue-100" placeholder="Department code"
+                                                                    focus:ring-blue-100" placeholder="Division code"
                                                                     
-                                                                    value="{{ $department->department_code }}"
+                                                                    value="{{ old('code') }}"
                                                                     
                                                                     style="font-family:'Lato';font-size:16px;font-weight:500;"                                                                     
                                                                     required
                                                                     />  
                                                                                                                                         
 
-                                                                    @error('department_code')
+                                                                    @error('code')
                                                                         <span class="text-red-700 text-sm">
                                                                             {{$message}}
                                                                         </span>
                                                                     @enderror
                             
-                        </div><!-- end of department code //-->
+                        </div><!-- end of division code //-->
 
-                        <div class="flex flex-col border-red-900 w-[80%] md:w-[60%] mt-4">
+                        <div class="flex flex-col border-red-900 w-[80%] md:w-[60%] mt-4 mb-4">
                             <button type="submit" class="border border-1 bg-gray-400 py-4 text-white 
                                            hover:bg-gray-500
-                                           rounded-md text-lg" style="font-family:'Lato';font-weight:500;">Update Department</button>
+                                           rounded-md text-lg" style="font-family:'Lato';font-weight:500;">Create Division</button>
                         </div>
                         
-                    </form><!-- end of new department form //-->
+                    </form><!-- end of new Division form //-->
                 <div>
         </section>
-        <!-- end of new college form //-->
+        <!-- end of new division form //-->
 
 
     </div><!-- end of container //-->

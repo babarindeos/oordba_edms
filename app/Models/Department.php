@@ -16,7 +16,7 @@ class Department extends Model
     ];
 
     public function directorate(){
-        return $this->belongsTo(Directorate::class);
+        return $this->belongsTo(Directorate::class, 'directorate_id', 'id');
     }
 
     public function staff()
