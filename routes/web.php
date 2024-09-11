@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\Admin_AnalyticsController;
 
 
 use App\Http\Controllers\Admin\Admin_DivisionController;
+use App\Http\Controllers\Admin\Admin_BranchController;
 
 use App\Http\Controllers\Staff\Staff_AuthController;
 use App\Http\Controllers\Staff\Staff_DashboardController;
@@ -176,6 +177,18 @@ Route::prefix('admin')->middleware(['auth','admin'])->group(function(){
     Route::post('/divisions/{division}/confirm_delete', [Admin_DivisionController::class, 'confirm_delete'])->name('admin.divisions.confirm_delete');
 
     
+    // Branch
+    Route::get('/branches', [Admin_BranchController::class, 'index'])->name('admin.branches.index');
+    Route::get('branches/create', [Admin_BranchController::class, 'create'])->name('admin.branches.create');
+    Route::post('branches/store', [Admin_BranchController::class, 'store'])->name('admin.branches.store');
+    
+    Route::get('branches/{branch}/show', [Admin_BranchController::class, 'show'])->name('admin.branches.show');
+    Route::get('branches/{branch}/edit', [Admin_BranchController::class, 'edit'])->name('admin.branches.edit');
+    Route::post('branches/{branch}/update', [Admin_BranchController::class, 'update'])->name('admin.branches.update');
+
+    Route::get('branches/{branch}/destroy', [Admin_BranchController::class, 'destroy'])->name('admin.branches.destroy');
+    Route::post('/branches/{branch}/confirm_delete', [Admin_BranchController::class, 'confirm_delete'])->name('admin.branches.confirm_delete');
+
 
 
     // Staff

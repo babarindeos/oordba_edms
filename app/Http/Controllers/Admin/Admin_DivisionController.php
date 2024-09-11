@@ -41,7 +41,7 @@ class Admin_DivisionController extends Controller
                 $data = [
                     'error' => true,
                     'status' => 'success',
-                    'message' => 'Divison has been successfully created'
+                    'message' => 'Division has been successfully created'
                 ];
             }
             else
