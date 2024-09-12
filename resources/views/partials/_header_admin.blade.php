@@ -46,7 +46,7 @@
                                     <a href="{{ route('admin.divisions.index') }}" class="flex flex-row px-4 py-2 hover:bg-gray-200  hover:border-l-yellow-500 hover:border-l-4 pr-8">Divisions</a>
                                     <a href="{{ route('admin.branches.index') }}" class="flex flex-row px-4 py-2 hover:bg-gray-200  hover:border-l-yellow-500 hover:border-l-4 pr-8">Branches</a>
                                     <a href="{{ route('admin.sections.index') }}" class="flex flex-row px-4 py-2 hover:bg-gray-200  hover:border-l-yellow-500 hover:border-l-4 pr-8">Sections</a>
-                                    <a href="#" class="flex flex-row px-4 py-2 hover:bg-gray-200  hover:border-l-yellow-500 hover:border-l-4 pr-8">Units</a>
+                                    <a href="{{ route('admin.units.index') }}" class="flex flex-row px-4 py-2 hover:bg-gray-200  hover:border-l-yellow-500 hover:border-l-4 pr-8">Units</a>
                                 </div>
                             </div>
                             <a  href='{{ route('admin.staff.index') }}' class="flex font-semibold items-center text-white hover:border-b-yellow-100 hover:border-b-4 mx-3 ">Users</a>
@@ -73,12 +73,12 @@
                     </button>
                     <!-- Sub-menu for Mobile -->
                     <div class="hidden bg-slate-50 rounded-md" id="services-sub-menu-mobile">
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-200">Directorates</a>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-200">Departments</a>
-                        <a href="#" class="flex flex-row px-4 py-2 hover:bg-gray-200">Divisions</a>
-                        <a href="#" class="flex flex-row px-4 py-2 hover:bg-gray-200">Branches</a>
-                        <a href="#" class="flex flex-row px-4 py-2 hover:bg-gray-200">Sections</a>
-                        <a href="#" class="flex flex-row px-4 py-2 hover:bg-gray-200">Units</a>
+                        <a href="{{ route('admin.directorates.index') }}" class="block px-4 py-2 hover:bg-gray-200">Directorates</a>
+                        <a href="{{ route('admin.departments.index') }}" class="block px-4 py-2 hover:bg-gray-200">Departments</a>
+                        <a href="{{ route('admin.divisions.index') }}" class="flex flex-row px-4 py-2 hover:bg-gray-200">Divisions</a>
+                        <a href="{{ route('admin.branches.index') }}" class="flex flex-row px-4 py-2 hover:bg-gray-200">Branches</a>
+                        <a href="{{ route('admin.sections.index') }}" class="flex flex-row px-4 py-2 hover:bg-gray-200">Sections</a>
+                        <a href="{{ route('admin.units.index') }}" class="flex flex-row px-4 py-2 hover:bg-gray-200">Units</a>
                     </div>
                 </div>
                 <a href="#" class="block text-white px-4 py-2 hover:bg-gray-700 rounded-md">Users</a>
