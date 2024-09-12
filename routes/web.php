@@ -20,6 +20,7 @@ use App\Http\Controllers\Admin\Admin_AnalyticsController;
 
 use App\Http\Controllers\Admin\Admin_DivisionController;
 use App\Http\Controllers\Admin\Admin_BranchController;
+use App\Http\Controllers\Admin\Admin_SectionController;
 
 use App\Http\Controllers\Staff\Staff_AuthController;
 use App\Http\Controllers\Staff\Staff_DashboardController;
@@ -188,6 +189,20 @@ Route::prefix('admin')->middleware(['auth','admin'])->group(function(){
 
     Route::get('branches/{branch}/destroy', [Admin_BranchController::class, 'destroy'])->name('admin.branches.destroy');
     Route::post('/branches/{branch}/confirm_delete', [Admin_BranchController::class, 'confirm_delete'])->name('admin.branches.confirm_delete');
+
+
+    // Section
+    Route::get('/sections', [Admin_SectionController::class, 'index'])->name('admin.sections.index');
+    Route::get('sections/create', [Admin_SectionController::class, 'create'])->name('admin.sections.create');
+    Route::post('sections/store', [Admin_SectionController::class, 'store'])->name('admin.sections.store');
+    
+    Route::get('sections/{section}/show', [Admin_SectionController::class, 'show'])->name('admin.sections.show');
+    Route::get('sections/{section}/edit', [Admin_SectionController::class, 'edit'])->name('admin.sections.edit');
+    Route::post('sections/{section}/update', [Admin_SectionController::class, 'update'])->name('admin.sections.update');
+
+    Route::get('sections/{section}/destroy', [Admin_SectionController::class, 'destroy'])->name('admin.sections.destroy');
+    Route::post('/sections/{section}/confirm_delete', [Admin_SectionController::class, 'confirm_delete'])->name('admin.sections.confirm_delete');
+
 
 
 
