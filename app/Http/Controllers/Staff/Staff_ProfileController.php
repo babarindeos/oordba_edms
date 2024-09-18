@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\Profile;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Staff;
+use App\Http\Classes\OrganClass;
 
 class Staff_ProfileController extends Controller
 {
@@ -197,8 +198,12 @@ class Staff_ProfileController extends Controller
 
     public function user_profile($fileno)
     {
-        $userprofile = Staff::where('fileno', $fileno)->first();
         
-        return view('staff.profile.user_profile', compact('userprofile'));
+        $userprofile = Staff::where('fileno', $fileno)->first();
+
+        $organ = OrganClass::getOrganBySegment($userprofile);
+        
+
+        return view('staff.profile.user_profile', compact('userprofile', 'organ'));
     }
 }

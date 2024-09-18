@@ -324,10 +324,12 @@
                                                                 </div>
                                                                 <div class="flex flex-col py-2 w-full">
                                                                     <a class="font-bold hover:underline" href="{{ route('staff.profile.user_profile', ['fileno'=>$contributor->user->staff->fileno]) }}">
-                                                                        {{ $contributor->user->staff->surname }}  ({{ $contributor->user->staff->firstname }})
+                                                                        {{ $contributor->user->staff->surname }}  {{ $contributor->user->staff->firstname }}
                                                                     </a>
-                                                                    <div>{{ $contributor->user->staff->department->department_name }}  ({{ $contributor->user->staff->department->department_code }})</div>
-                                                                    <div>{{ $contributor->user->staff->department->ministry->name }} ({{ $contributor->user->staff->department->ministry->code }})</div>
+                                                                    {{-- <div>{{ $contributor->user->staff->segment->name }}  ({{ $contributor->user->staff->department->department_code }})</div> --}}
+                                                                    @if ($contributor->user->profile != null) 
+                                                                        <div> {{ $contributor->user->profile->designation }} </div>
+                                                                    @endif
                                                                     <div class="w-full">
                                                                         @if (Auth::user()->id != $contributor->user_id)
                                                                             @php

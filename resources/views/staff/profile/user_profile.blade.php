@@ -51,10 +51,10 @@
 
                             <div class="py-4 mx-[10%] md:mx-0">
                                     <div>
-                                            {{ $userprofile->department->ministry->name}} ({{ $userprofile->department->ministry->code}})
+                                            {{ $organ->name}} ({{ $organ->code}})
                                     </div>
                                     <div>
-                                            {{ $userprofile->department->department_name }} ({{ $userprofile->department->department_code}})
+                                            {{ $userprofile->segment->name }} 
                                     </div>                            
                             </div>
 

@@ -11,7 +11,7 @@
 
 
             <!-- Right  panel //-->
-            <div class="flex flex-col w-full  md:w-[30%] items-center justify-center">
+            <div class="flex flex-col w-full  md:w-[30%] items-center justify-center py-8">
 
                 <section class="flex flex-col w-full border border-0">
                     <div class="flex flex-col w-full border border-0" >
@@ -76,7 +76,7 @@
 
                             <!-- submit //-->
                             <!-- submit button //-->
-                            <div class="flex flex-col border-red-900 w-[70%] md:w-[80%] mt-8">
+                            <div class="flex flex-col border-red-900 w-[80%] md:w-[80%] py-1 md:py-2">
                                 <button type="submit" class="border border-1 bg-gray-400 py-4 text-white 
                                                hover:bg-gray-500
                                                rounded-md text-lg" style="font-family:'Lato';font-weight:500;">Login</button>

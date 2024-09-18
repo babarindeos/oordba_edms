@@ -147,8 +147,8 @@
                                                                                             <div>
                                                                                                     <div>
                                                                                                             <div class='font-semibold'>{{ $staff->title}} {{$staff->surname}} {{$staff->firstname}}, {{$staff->fileno}}</div>
-                                                                                                            <div>{{$staff->department->department_name}}</div>
-                                                                                                            <div>{{$staff->department->ministry->name}}</div>
+                                                                                                            <div>{{ session('organ')->name }} ({{ session('organ')->code }})</div>
+                                                                                                            <div>{{$staff->segment->name}}</div>
                                                                                                     </div>
 
                                                                                                     <form action="{{ route('staff.workflows.post_add_contributor',['document'=>$document->id]) }}" method="POST">
@@ -228,8 +228,10 @@
                                                         </div>
                                                         <div class="flex flex-col py-2 w-full">
                                                             <div class="font-bold">{{ $contributor->user->staff->surname}}  {{ $contributor->user->staff->firstname}}</div>
-                                                            <div>{{ $contributor->user->staff->department->department_name}}  {{ $contributor->user->staff->department->department_code}}</div>
-                                                            <div>{{ $contributor->user->staff->department->ministry->name}}</div>
+                                                            @if ($contributor->user->profile != null)
+                                                                <div>{{ $contributor->user->profile->designation }}</div>
+                                                            @endif
+
                                                             <div class="w-full">
                                                                 @if (Auth::user()->id == $contributor->add_initiator->id)
                                                                     <div class="flex text-end justify-end "> 

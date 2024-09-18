@@ -124,6 +124,16 @@ class Staff_DocumentController extends Controller
                         'status' => 'success',
                         'message' => 'Document has been successfully submitted'
                     ];
+
+
+                    // add document owner and creator into workflow contributor automatically
+                    FlowContributor::create([
+                        'doc_id' => $create->id,
+                        'user_id' => Auth::user()->id,
+                        'added_by' => Auth::id()
+                    ]);
+
+                    
                 }
                 else
                 {

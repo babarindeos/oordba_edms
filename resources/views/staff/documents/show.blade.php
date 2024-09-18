@@ -114,8 +114,9 @@
                                                         <a href="{{ route('staff.profile.user_profile', ['fileno'=>$contributor->user->staff->fileno]) }}" class="font-bold hover:underline">
                                                                 {{ $contributor->user->staff->surname}}  {{ $contributor->user->staff->firstname}}
                                                         </a>
-                                                        <div>{{ $contributor->user->staff->department->department_name}}  ({{ $contributor->user->staff->department->department_code}})</div>
-                                                        <div>{{ $contributor->user->staff->department->ministry->name}} ({{ $contributor->user->staff->department->ministry->code}})</div>
+                                                        @if ($contributor->user->profile != null)                                                               
+                                                                <div>{{ $contributor->user->profile->designation }} </div>
+                                                        @endif
                                                         
                                                     </div>
                                             </div>

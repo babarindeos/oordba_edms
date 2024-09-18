@@ -2,8 +2,9 @@
     
 
     <!-- header bar //-->
-    <div class="flex flex-row justify-between py-2">
-        <div class="flex">
+    <div class="flex flex-row justify-between py-2 md:px-4">
+        <!-- Logo -->
+        <div class="flex flex-shrink-0">
             <!-- logo //-->
             <div class="flex flex-row px-2 md:px-4 py-2">
                 <img src="{{ asset('images/logo.png')}}" />
@@ -11,8 +12,9 @@
             <!-- end of logo //-->
             <!-- Name //-->
             <div class="flex flex-col item-center justify-center">
-                    <div class="text-white font-bold text-3xl font-serif">GoviFlow</div>
-                    <div class="text-white font-semibold font-serif text-xl">Complete Work Flow</div>
+                    <div class="text-white font-bold text-2xl font-serif">OORBDA EDMS</div>
+                    <div class="text-white font-semibold font-serif text-xs opacity-70">Electronic Document Management System</div>
+                        
             </div>
             <!-- end of name //-->
         </div>

@@ -13,6 +13,7 @@ use App\Models\Workflow;
 use App\Http\Classes\WorkflowClass;
 use App\Models\PrivateMessage;
 use App\Models\GeneralMessage;
+use App\Http\Classes\OrganClass;
 
 class Staff_WorkflowController extends Controller
 {
@@ -57,6 +58,7 @@ class Staff_WorkflowController extends Controller
             'added_by' => auth()->user()->id
         ];
 
+    
         $contributor_already_added = FlowContributor::where('doc_id', $document->id)
                                                     ->where('user_id', $formFields['user_id'])->exists();
         
@@ -138,8 +140,12 @@ class Staff_WorkflowController extends Controller
              $staff = null;
              return redirect()->back()->with($data);
          }         
-                 
-         return redirect()->back()->with(['error'=>false, 'status'=>'success', 'staff' => $staff]);
+         
+         $organ = OrganClass::getOrganBySegment($staff);
+
+        // dd($organ->name);
+
+         return redirect()->back()->with(['error'=>false, 'status'=>'success', 'staff' => $staff, 'organ'=>$organ]);
          //return view('staff.workflows.add_contributor', compact('document','staff'))->with(['error'=>false, 'status'=>'success']);
          
     }

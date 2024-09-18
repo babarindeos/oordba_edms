@@ -48,8 +48,11 @@
                                                         {{ $contributor->user->staff->surname}}  {{ $contributor->user->staff->firstname}}
                                                     </a>
 
-                                                    <div>{{ $contributor->user->staff->department->department_name}}  ({{ $contributor->user->staff->department->department_code}})</div>
-                                                    <div>{{ $contributor->user->staff->department->ministry->name}} ({{ $contributor->user->staff->department->ministry->code}})</div>
+                                                    @if ($contributor->user->profile != null)
+                                                        <div>{{ $contributor->user->profile->designation}}  </div>
+                                                        
+                                                    @endif
+
                                                     <div class="w-full">
                                                         @if (Auth::user()->id != $contributor->user_id)
                                                             <div class="flex text-end justify-end "> 
