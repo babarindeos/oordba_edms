@@ -9,12 +9,15 @@ use App\Models\College;
 use App\Models\Department;
 use App\Models\Ministry;
 use App\Models\Directorate;
+use App\Models\Segment;
+use App\Models\SegmentOrgan;
+use Illuminate\Support\Facades\DB;
 
 class Admin_DepartmentController extends Controller
 {
     //
     public function index(){
-        $departments = Department::orderBy('department_name', 'asc')->paginate(2);
+        $departments = Department::orderBy('name', 'asc')->paginate(2);
         return view('admin.departments.index', compact('departments'));
     }
 
@@ -26,17 +29,19 @@ class Admin_DepartmentController extends Controller
 
     public function store(Request $request){
         
+        
         $formFields = $request->validate([
             'directorate' => 'required',
-            'department_name' => 'required | string',
-            'department_code' => ['required', 'string']
+            'name' => 'required|string|unique:departments,name',
+            'code' => ['required', 'string', 'unique:departments,code']
         ]);
 
-        $formFields['directorate_id'] = $formFields['directorate'];
+        $formFields['directorate_id'] = $formFields['directorate'];        
 
-        
+        DB::beginTransaction();
 
         try{
+
             $create = Department::create($formFields);
 
             if ($create){
@@ -45,14 +50,29 @@ class Admin_DepartmentController extends Controller
                     'status' => 'success',
                     'message' => 'The Department has been successfully created'
                 ];
+
+                $current_segment = Segment::findOrFail(2);
+
+                $segment_organs_data = [
+                    'segment_id' => $current_segment->id,
+                    'organ_id' => $create->id
+                ];
+
+                SegmentOrgan::create($segment_organs_data);
+
             }else{
-                $data = [
+                /* $data = [
                     'error' => true,
                     'status' => 'fail',
                     'message' => 'An error occurred creating the Department'
-                ];
+                ]; */
+
+                throw new \Exception("fatal error creating Department");
             }
     
+
+            DB::commit();
+
         }catch(\Exception $e)
         {
             $data = [
@@ -60,9 +80,9 @@ class Admin_DepartmentController extends Controller
                     'status' => 'fail',
                     'message' => 'An error occurred creating the Department'.$e->getMessage()
             ];
-        }
-        
 
+            DB::rollBack();
+        }
         
         return redirect()->back()->with($data);
         
@@ -80,8 +100,8 @@ class Admin_DepartmentController extends Controller
     public function update(Request $request, Department $department){
         $formFields = $request->validate([
             'directorate' => 'required',
-            'department_name' => ['required', 'string'],
-            'department_code' => 'required | string'
+            'name' => ['required', 'string'],
+            'code' => 'required | string'
         ]);
 
         $formFields['directorate_id'] = $formFields['directorate'];
@@ -115,14 +135,14 @@ class Admin_DepartmentController extends Controller
     }
 
 
-    public function destroy(Department $department)
+    public function confirm_delete(Department $department)
     {
         
-        return view('admin.departments.destroy', compact('department'));
+        return view('admin.departments.confirm_delete', compact('department'));
 
     }
 
-    public function confirm_delete(Request $request, Department $department)
+    public function destroy(Request $request, Department $department)
     {
 
     }

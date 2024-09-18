@@ -11,8 +11,8 @@ class Department extends Model
 
     protected $fillable = [
         'directorate_id',
-        'department_name',
-        'department_code'
+        'name',
+        'code'
     ];
 
     public function directorate(){

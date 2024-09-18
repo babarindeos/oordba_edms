@@ -46,7 +46,7 @@
                                                                      >
                                                                     <option value=''>-- Select Department --</option>
                                                                         @foreach($departments as $department)
-                                                                            <option class='py-4' value="{{$department->id}}">{{$department->department_name}} ({{$department->department_code}})</option>
+                                                                            <option class='py-4' value="{{$department->id}}">{{$department->name}} ({{$department->code}})</option>
                                                                         @endforeach                                                                    
                                                                     </select>
 

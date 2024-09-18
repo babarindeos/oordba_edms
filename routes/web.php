@@ -136,8 +136,8 @@ Route::prefix('admin')->middleware(['auth','admin'])->group(function(){
     Route::get('/directorates/{directorate}/edit', [Admin_DirectorateController::class, 'edit'])->name('admin.directorates.edit');
     Route::post('/directorates/{directorate}/update', [Admin_DirectorateController::class, 'update'])->name('admin.directorates.update');
 
-    Route::get('/directorates/{directorate}/destroy', [Admin_DirectorateController::class, 'destroy'])->name('admin.directorates.destroy');
-    Route::post('/directorates/{directorate}/confirm_delete', [Admin_DirectorateController::class, 'confirm_delete'])->name('admin.directorates.confirm_delete');
+    Route::get('/directorates/{directorate}/confirm_delete', [Admin_DirectorateController::class, 'confirm_delete'])->name('admin.directorates.confirm_delete');
+    Route::post('/directorates/{directorate}/destroy', [Admin_DirectorateController::class, 'destroy'])->name('admin.directorates.destroy');
 
     
     // ministry
@@ -162,8 +162,8 @@ Route::prefix('admin')->middleware(['auth','admin'])->group(function(){
     Route::get('departments/{department}/edit', [Admin_DepartmentController::class, 'edit'])->name('admin.departments.edit');
     Route::post('departments/{department}/update', [Admin_DepartmentController::class, 'update'])->name('admin.departments.update');
 
-    Route::get('departments/{department}/destroy', [Admin_DepartmentController::class, 'destroy'])->name('admin.departments.destroy');
-    Route::post('/departments/{department}/confirm_delete', [Admin_DepartmentController::class, 'confirm_delete'])->name('admin.departments.confirm_delete');
+    Route::get('departments/{department}/confirm_delete', [Admin_DepartmentController::class, 'confirm_delete'])->name('admin.departments.confirm_delete');
+    Route::post('/departments/{department}/destroy', [Admin_DepartmentController::class, 'destroy'])->name('admin.departments.destroy');
 
 
     // Division
@@ -175,8 +175,8 @@ Route::prefix('admin')->middleware(['auth','admin'])->group(function(){
     Route::get('divisions/{division}/edit', [Admin_DivisionController::class, 'edit'])->name('admin.divisions.edit');
     Route::post('divisions/{division}/update', [Admin_DivisionController::class, 'update'])->name('admin.divisions.update');
 
-    Route::get('divisions/{division}/destroy', [Admin_DivisionController::class, 'destroy'])->name('admin.divisions.destroy');
-    Route::post('/divisions/{division}/confirm_delete', [Admin_DivisionController::class, 'confirm_delete'])->name('admin.divisions.confirm_delete');
+    Route::get('divisions/{division}/confirm_delete', [Admin_DivisionController::class, 'confirm_delete'])->name('admin.divisions.confirm_delete');
+    Route::post('/divisions/{division}/destroy', [Admin_DivisionController::class, 'destroy'])->name('admin.divisions.destroy');
 
     
     // Branch
@@ -188,8 +188,8 @@ Route::prefix('admin')->middleware(['auth','admin'])->group(function(){
     Route::get('branches/{branch}/edit', [Admin_BranchController::class, 'edit'])->name('admin.branches.edit');
     Route::post('branches/{branch}/update', [Admin_BranchController::class, 'update'])->name('admin.branches.update');
 
-    Route::get('branches/{branch}/destroy', [Admin_BranchController::class, 'destroy'])->name('admin.branches.destroy');
-    Route::post('/branches/{branch}/confirm_delete', [Admin_BranchController::class, 'confirm_delete'])->name('admin.branches.confirm_delete');
+    Route::get('branches/{branch}/confirm_delete', [Admin_BranchController::class, 'confirm_delete'])->name('admin.branches.confirm_delete');
+    Route::post('/branches/{branch}/destroy', [Admin_BranchController::class, 'destroy'])->name('admin.branches.destroy');
 
 
     // Section
@@ -201,8 +201,8 @@ Route::prefix('admin')->middleware(['auth','admin'])->group(function(){
     Route::get('sections/{section}/edit', [Admin_SectionController::class, 'edit'])->name('admin.sections.edit');
     Route::post('sections/{section}/update', [Admin_SectionController::class, 'update'])->name('admin.sections.update');
 
-    Route::get('sections/{section}/destroy', [Admin_SectionController::class, 'destroy'])->name('admin.sections.destroy');
-    Route::post('/sections/{section}/confirm_delete', [Admin_SectionController::class, 'confirm_delete'])->name('admin.sections.confirm_delete');
+    Route::get('sections/{section}/confirm_delete', [Admin_SectionController::class, 'confirm_delete'])->name('admin.sections.confirm_delete');
+    Route::post('/sections/{section}/confirm_destroy', [Admin_SectionController::class, 'destroy'])->name('admin.sections.destroy');
 
 
     // Unit
@@ -214,8 +214,8 @@ Route::prefix('admin')->middleware(['auth','admin'])->group(function(){
     Route::get('units/{unit}/edit', [Admin_UnitController::class, 'edit'])->name('admin.units.edit');
     Route::post('units/{unit}/update', [Admin_UnitController::class, 'update'])->name('admin.units.update');
 
-    Route::get('units/{unit}/destroy', [Admin_UnitController::class, 'destroy'])->name('admin.units.destroy');
-    Route::post('/units/{unit}/confirm_delete', [Admin_UnitController::class, 'confirm_delete'])->name('admin.units.confirm_delete');
+    Route::get('units/{unit}/confirm_delete', [Admin_UnitController::class, 'confirm_delete'])->name('admin.units.confirm_delete');
+    Route::post('/units/{unit}/destroy', [Admin_UnitController::class, 'destroy'])->name('admin.units.destroy');
 
 
 
@@ -223,7 +223,8 @@ Route::prefix('admin')->middleware(['auth','admin'])->group(function(){
 
     // Staff
     Route::get('staff', [Admin_StaffController::class, 'index'])->name('admin.staff.index');
-    Route::get('staff/create', [Admin_StaffController::class, 'create'])->name('admin.staff.create');
+    Route::post('staff/select_organ', [Admin_StaffController::class, 'select_organ'])->name('admin.staff.select_organ');
+    Route::get('staff/{organ}/create', [Admin_StaffController::class, 'create'])->name('admin.staff.create');
     Route::post('staff/store', [Admin_StaffController::class, 'store'])->name('admin.staff.store');
 
     Route::get('staff/{staff}/edit', [Admin_StaffController::class, 'edit'])->name('admin.staff.edit');

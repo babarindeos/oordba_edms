@@ -11,7 +11,8 @@ class Staff extends Model
 
     protected $fillable = [
         'user_id',
-        'department_id',
+        'segment_id',
+        'organ_id',
         'fileno',
         'title',
         'surname',
@@ -20,9 +21,9 @@ class Staff extends Model
     ];
 
 
-    public function ministry()
+    public function segment()
     {
-        return $this->belongsTo(Ministry::class, 'ministry_id', 'id');
+        return $this->belongsTo(Segment::class, 'segment_id', 'id');
     }
 
     public function department()

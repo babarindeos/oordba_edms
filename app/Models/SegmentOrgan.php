@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class SegmentOrgan extends Model
 {
     use HasFactory;
+
+    protected $fillable = [ 'segment_id', 'organ_id'];
 }

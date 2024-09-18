@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('directorate_id');
             $table->foreign('directorate_id')->references('id')->on('directorates')->onDelete('cascade');
-            $table->string('department_name')->unique();
-            $table->string('department_code')->unique();
+            $table->string('name')->unique();
+            $table->string('code')->unique();
             $table->timestamps();
 
             

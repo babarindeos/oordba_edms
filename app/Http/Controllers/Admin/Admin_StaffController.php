@@ -10,6 +10,13 @@ use App\Models\Staff;
 use App\Models\Ministry;
 use Illuminate\Support\Str;
 use App\Models\User;
+use App\Models\Directorate;
+use App\Models\Division;
+use App\Models\Branch;
+use App\Models\Section;
+use App\Models\Unit;
+use Illuminate\Support\Facades\DB;
+
 use Mail;
 
 
@@ -26,12 +33,48 @@ class Admin_StaffController extends Controller
 
     }
 
-    public function create(){
+    public function select_organ(Request $request)
+    {
+        
+        return redirect()->route('admin.staff.create', ['organ'=> $request->input('organ')]);
 
-        //$colleges = College::orderBy('college_name', 'asc')->get();
-        $ministries = Ministry::orderBy('name', 'asc')->get();
-        $departments = Department::orderBy('department_name', 'asc')->get();
-        return view('admin.staff.create')->with(['ministries'=>$ministries, 'departments'=>$departments]);
+    }
+
+    public function create($organ){
+        
+        $segment_id = $organ;
+
+        switch ($organ)
+        {
+            case 1:
+                $organ = "Directorate";
+                $organ_items = Directorate::orderBy('name', 'asc')->get();
+                break;
+            case 2:
+                $organ = "Department";
+                $organ_items = Department::orderBy('name', 'asc')->get();
+                break;
+            case 3:
+                $organ = "Division";
+                $organ_items = Division::orderBy('name', 'asc')->get();
+                break;
+            case 4:
+                $organ = "Branch";
+                $organ_items = Branch::orderBy('name', 'asc')->get();
+                break;                
+            case 5:
+                $organ = "Section";
+                $organ_items = Section::orderBy('name', 'asc')->get();
+                break;
+            case 6:
+                $organ = "Unit";
+                $organ_items = Unit::orderBy('name', 'asc')->get();
+        }
+
+
+
+        return view('admin.staff.create')->with(['segment_id'=>$segment_id, 'organ'=>$organ, 
+                                                 'organ_items'=>$organ_items]);
 
     }
 
@@ -43,9 +86,10 @@ class Admin_StaffController extends Controller
 
        // dd($password);
 
-        $formFields = $request->validate([           
-            'department' => ['required'],
-            'fileno' => 'required',
+        $formFields = $request->validate([ 
+            'segment_id' => ['required'],          
+            'organ' => ['required'],
+            'fileno' => 'required|unique:staff,fileno',
             'title' => 'required',
             'surname' => 'required | string',
             'firstname' => ['required', 'string'],
@@ -68,12 +112,14 @@ class Admin_StaffController extends Controller
             return redirect()->back()->with($data);
         }
 
-
+        $formFields['organ_id'] = $formFields['organ'];
         $formFields['surname'] = strtoupper($formFields['surname']);
         $formFields['firstname'] = ucfirst($formFields['firstname']);
         $formFields['middlename'] = ucfirst($formFields['middlename']);
-        $formFields['college_id'] = $request->input('college');
-        $formFields['department_id'] = $request->input('department');
+        $formFields['email'] = strtolower($formFields['email']);
+        
+
+        DB::beginTransaction();
 
         try{
             
@@ -103,7 +149,8 @@ class Admin_StaffController extends Controller
 
             if ($createUser){                      
 
-                try{
+                try
+                {
 
                     $formFields['user_id'] = $createUser->id;
 
@@ -133,35 +180,55 @@ class Admin_StaffController extends Controller
                                 $message->from("clearanceinfo@funaab.edu.ng", "GoviFlow");
                                         
                             });        
+
+                            DB::commit();
                     }
                     else
                     {
-                        $data = [
-                            'error' => true,
-                            'status' => 'success',
-                            'message' => 'An error occurred createing the Staff'
-                        ];         
+                            $data = [
+                                'error' => true,
+                                'status' => 'success',
+                                'message' => 'An error occurred creating the Staff'
+                            ];   
+                            
+                            DB::rollBack();
                     }
 
                     
     
-                }catch(\Exception $e){
-                    dd($e->getMessage());
+                }
+                catch(\Exception $e)
+                {
+                    $data = [
+                        'error' => true,
+                        'status' => 'fail',
+                        'message' => 'An error occurred '.$e->getMessage()
+                    ];   
+
+                        DB::rollBack();
                 }
 
-            }else{
+            }
+            else
+            {
                 $data = [
                     'error' => true,
                     'status' => 'fail',
-                    'message' => 'An error occurred creating the Staff Account'
+                    'message' => 'An error occurred creating the User Account'
                 ];
+
+                DB::rollBack();
             }
-        }catch(\Exception $e){
+        }
+        catch(\Exception $e)
+        {
                 $data = [
                     'error' => true,
                     'status' => 'fail',
                     'message' => 'An error occurred creating the Staff '.$e->getMessage()
                 ];
+
+                DB::rollBack();
         }
 
         return redirect()->back()->with($data);

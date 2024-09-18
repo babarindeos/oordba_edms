@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Section;
 use App\Models\Branch;
+use App\Models\Segment;
+use App\Models\SegmentOrgan;
+use Illuminate\Support\Facades\DB;
 
 class Admin_SectionController extends Controller
 {
@@ -34,6 +37,8 @@ class Admin_SectionController extends Controller
 
         $formFields['branch_id'] = $formFields['branch'];
 
+        DB::beginTransaction();
+
         try
         {
             $create = Section::create($formFields);
@@ -45,15 +50,30 @@ class Admin_SectionController extends Controller
                     'status' => 'success',
                     'message' => 'Section has been successfully created'
                 ];
+
+                $current_segment = Segment::findOrFail(5);
+
+                $segment_organs_data = [
+                    'segment_id' => $current_segment->id,
+                    'organ_id' => $create->id
+                ];
+
+                SegmentOrgan::create($segment_organs_data);
+
+                
             }
             else
             {
-                $data = [
+                /* $data = [
                     'error' => true,
                     'status' => 'fail',
                     'message' => 'An error occurred creating the Section'
-                ];
+                ]; */
+
+                throw new \Exception("fatal error creating the Section");
             }
+
+            DB::commit();
             
         }
         catch(\Exception $e)
@@ -63,6 +83,8 @@ class Admin_SectionController extends Controller
                     'status' => 'success',
                     'message' => 'An error occurred'.$e->getMessage()
                 ];
+
+                DB::rollBack();
         }
         
         return redirect()->back()->with($data);
@@ -123,17 +145,17 @@ class Admin_SectionController extends Controller
     }
 
 
-    public function destroy(Section $section)
+    public function confirm_delete(Section $section)
     {
         if ($section == null)
         {
             return redirect()->back();
         }
 
-        return view('admin.sections.destroy', compact('section'));
+        return view('admin.sections.confirm_delete', compact('section'));
     }
 
-    public function confirm_delete()
+    public function destroy()
     {
 
     }

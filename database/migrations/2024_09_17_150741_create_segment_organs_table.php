@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('segment_id');
             $table->foreign('segment_id')->references('id')->on('segments')->onDelete('cascade');
-            $table->bigInteger('organ_id');
+            $table->unsignedBigInteger('organ_id');
             $table->timestamps();
         });
     }

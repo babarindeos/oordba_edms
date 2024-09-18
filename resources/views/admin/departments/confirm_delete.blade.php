@@ -26,7 +26,7 @@
                             <h2 class="font-semibold text-xl py-1" ></h2>
                             Do you really wish to delete this Department?
                             <div class="py-2 text-lg font-semibold">
-                                    {{ $department->department_name }} ({{ $department->department_code }})
+                                    {{ $department->name }} ({{ $department->code }})
                             </div>
                         </div>
 

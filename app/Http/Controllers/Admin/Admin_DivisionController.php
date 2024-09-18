@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Division;
 use App\Models\Department;
+use App\Models\Segment;
+use App\Models\SegmentOrgan;
+use Illuminate\Support\Facades\DB;
 
 class Admin_DivisionController extends Controller
 {
@@ -18,7 +21,7 @@ class Admin_DivisionController extends Controller
 
     public function create()
     {
-        $departments = Department::orderBy('department_name', 'desc')->get();
+        $departments = Department::orderBy('name', 'desc')->get();
         return view('admin.divisions.create')->with('departments', $departments);
     }
 
@@ -32,6 +35,8 @@ class Admin_DivisionController extends Controller
 
         $formFields['department_id'] = $formFields['department'];
 
+        DB::beginTransaction();
+
         try
         {
             $create = Division::create($formFields);
@@ -43,15 +48,28 @@ class Admin_DivisionController extends Controller
                     'status' => 'success',
                     'message' => 'Division has been successfully created'
                 ];
+
+                $current_segment = Segment::findOrFail(3);
+
+                $segment_organs_data = [
+                    'segment_id' => $current_segment->id,
+                    'organ_id' => $create->id
+                ];
+
+                SegmentOrgan::create($segment_organs_data);
             }
             else
             {
-                $data = [
+                /* $data = [
                     'error' => true,
                     'status' => 'fail',
                     'message' => 'An error occurred creating the Division'
-                ];
+                ]; */
+
+                throw new \Exception("fatal error creating Division");
             }
+
+            DB::commit();
             
         }
         catch(\Exception $e)
@@ -61,6 +79,8 @@ class Admin_DivisionController extends Controller
                     'status' => 'success',
                     'message' => 'An error occurred'.$e->getMessage()
                 ];
+
+                DB::rollBack();
         }
         
         return redirect()->back()->with($data);
@@ -117,17 +137,17 @@ class Admin_DivisionController extends Controller
 
     }
 
-    public function destroy(Division $division)
+    public function confirm_delete(Division $division)
     {
         if ($division == null)
         {
             return redirect()->back();
         }
 
-        return view('admin.divisions.destroy', compact('division'));
+        return view('admin.divisions.confirm_delete', compact('division'));
     }
 
-    public function confirm_delete()
+    public function destroy()
     {
 
     }

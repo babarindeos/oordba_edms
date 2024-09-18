@@ -15,13 +15,15 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->unsignedBigInteger('department_id');
-            $table->foreign('department_id')->references('id')->on('departments')->onDelete('cascade');           
+            $table->unsignedBigInteger('segment_id');
+            $table->foreign('segment_id')->references('id')->on('segments')->onDelete('cascade');
+            $table->unsignedBigInteger('organ_id');           
             $table->string('fileno')->unique();
             $table->string('title');
             $table->string('surname');
             $table->string('firstname');
             $table->string('middlename');
+            $table->string('role');
             $table->timestamps();
         });
     }

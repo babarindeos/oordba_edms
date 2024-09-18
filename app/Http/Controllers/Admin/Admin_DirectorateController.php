@@ -7,7 +7,9 @@ use Illuminate\Http\Request;
 use App\Models\Directorate;
 use App\Models\Department;
 use Illuminate\Validation\Rule;
-
+use Illuminate\Support\Facades\DB;
+use App\Models\Segment;
+use App\Models\SegmentOrgan;
 class Admin_DirectorateController extends Controller
 {
 
@@ -37,24 +39,53 @@ class Admin_DirectorateController extends Controller
         
         if ($directorate_exist == false)
         {
-            $create = Directorate::create($formFields);
+            DB::beginTransaction();
 
-            if ($create)
+            try
             {
-                $data = [
-                    'error' => true,
-                    'status' => 'success',
-                    'message' => 'Directorate has been successfully created'
-                ];
+                $create = Directorate::create($formFields);
+
+                if ($create)
+                {
+                    $data = [
+                        'error' => true,
+                        'status' => 'success',
+                        'message' => 'Directorate has been successfully created'
+                    ];
+
+                    $current_segment = Segment::findOrFail(1);
+
+                    $segment_organs_data = [
+                        'segment_id' => $current_segment->id,
+                        'organ_id' => $create->id
+                    ];
+
+                    SegmentOrgan::create($segment_organs_data);
+
+                }
+                else
+                {
+                    /* $data = [
+                        'error' => true,
+                        'status' => 'fail',
+                        'message' => 'An error occurred creating the Directorate. '
+                    ]; */
+                    throw new \Exception("fatal creation of Directorate");
+                }
+
+                DB::commit();
             }
-            else
+            catch(\Exception $e)
             {
                 $data = [
                     'error' => true,
                     'status' => 'fail',
-                    'message' => 'An error occurred creating the Directorate. '
+                    'message' => 'An error occurred creating the Directorate '.$e->getMessage()
                 ];
+
+                DB::rollBack();
             }
+            
         }
         else
         {
@@ -122,13 +153,13 @@ class Admin_DirectorateController extends Controller
         
     }
 
-    public function destroy(Directorate $directorate)
+    public function confirm_delete(Directorate $directorate)
     {
-        return view('admin.directorates.destroy', compact('directorate'));
+        return view('admin.directorates.confirm_delete', compact('directorate'));
 
     }
 
-    public function confirm_delete(Request $request, Ministry $ministry)
+    public function destroy(Request $request, Directorate $directorate)
     {
 
     }

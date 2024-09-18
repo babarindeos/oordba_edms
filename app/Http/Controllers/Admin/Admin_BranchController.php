@@ -6,6 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Division;
 use App\Models\Branch;
+use App\Models\Segment;
+use App\Models\SegmentOrgan;
+use Illuminate\Support\Facades\DB;
+
 
 class Admin_BranchController extends Controller
 {
@@ -33,6 +37,8 @@ class Admin_BranchController extends Controller
 
         $formFields['division_id'] = $formFields['division'];
 
+        DB::beginTransaction();
+
         try
         {
             $create = Branch::create($formFields);
@@ -44,15 +50,27 @@ class Admin_BranchController extends Controller
                     'status' => 'success',
                     'message' => 'Branch has been successfully created'
                 ];
+
+                $current_segment = Segment::findOrFail(4);
+
+                $segment_organs_data = [
+                    'segment_id' => $current_segment->id,
+                    'organ_id' => $create->id
+                ];
+
+                SegmentOrgan::create($segment_organs_data);
             }
             else
             {
-                $data = [
+                /* $data = [
                     'error' => true,
                     'status' => 'fail',
                     'message' => 'An error occurred creating the Branch'
-                ];
+                ]; */
+                throw new \Exception("fatal error creating Branch");
             }
+
+            DB::commit();
             
         }
         catch(\Exception $e)
@@ -62,6 +80,8 @@ class Admin_BranchController extends Controller
                     'status' => 'success',
                     'message' => 'An error occurred'.$e->getMessage()
                 ];
+
+                DB::rollBack();
         }
         
         return redirect()->back()->with($data);
@@ -118,7 +138,7 @@ class Admin_BranchController extends Controller
 
     }
 
-    public function destroy(Branch $branch)
+    public function confirm_delete(Branch $branch)
     {
         if ($branch == null)
         {
@@ -128,7 +148,7 @@ class Admin_BranchController extends Controller
         return view('admin.branches.destroy', compact('branch'));
     }
 
-    public function confirm_delete()
+    public function destroy()
     {
 
     }
