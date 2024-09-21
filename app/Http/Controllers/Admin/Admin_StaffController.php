@@ -176,8 +176,8 @@ class Admin_StaffController extends Controller
                             
                             Mail::send('emails.onboarding', $payload, function($message) use($recipient_email, $recipient){
                                 $message->to($recipient_email, $recipient)
-                                        ->subject("Welcome to Ogun State Workflow");
-                                $message->from("clearanceinfo@funaab.edu.ng", "GoviFlow");
+                                        ->subject("Welcome to O-ORBDA EDMS");
+                                $message->from("clearanceinfo@funaab.edu.ng", "O-ORBDA EDMS");
                                         
                             });        
 

@@ -39,6 +39,8 @@ class Staff_DashboardController extends Controller
                                                        ->where('read', false)
                                                        ->orderBy('id', 'desc')->paginate(5);
 
+        //dd($private_message_notifications);
+
         $recent_workflows = Workflow::latest()->take(5)->get();      
         
         $current_user =  Auth::user()->id;

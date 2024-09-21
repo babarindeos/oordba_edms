@@ -49,7 +49,7 @@
                                                                         @foreach($departments as $department)
                                                                             <option class='py-4' value="{{$department->id}}" 
                                                                                 @if ($department->id == $division->department->id) selected @endif>
-                                                                                    {{$department->department_name}} ({{$department->department_code}})
+                                                                                    {{$department->name}} ({{$department->code}})
                                                                             </option>
                                                                         @endforeach                                                                    
                                                                     </select>

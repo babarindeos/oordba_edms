@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Staff;
 use App\Http\Classes\OrganClass;
 
+
 class Staff_ProfileController extends Controller
 {
     //
@@ -137,7 +138,14 @@ class Staff_ProfileController extends Controller
 
     public function myprofile()
     {
-        return view('staff.profile.myprofile');
+        $currentUser = Auth::user();
+
+        //$userprofile = Staff::where('fileno', $fileno)->first();
+        $userprofile = $currentUser->staff;
+
+        $organ = OrganClass::getOrganBySegment($userprofile);
+
+        return view('staff.profile.myprofile', compact('userprofile', 'organ'));
     }
 
     public function edit()

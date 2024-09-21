@@ -63,7 +63,7 @@
                         <ul class="list-disc px-10">
                             @foreach ($private_message_notifications as $notification)
                                 <li class="py-3 border-b border-gray-100">
-                                    <a href="{{ route('staff.workflows.private_message.index', ['document'=>$notification->id, 'recipient'=>$notification->sender_id]) }}" title="{{ $notification->message }}" class="hover:underline"  >
+                                    <a href="{{ route('staff.workflows.private_message.index', ['document'=>$notification->doc_id, 'recipient'=>$notification->sender_id]) }}" title="{{ $notification->message }}" class="hover:underline"  >
                                     
                                         <div class="font-medium text-gray-700">
                                             {{$notification->message}}

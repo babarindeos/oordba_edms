@@ -58,12 +58,12 @@
 
 
                     <div class="py-4 mx-[10%] md:mx-0">
-                            <div>
-                                    {{ Auth::user()->staff->department->ministry->name}} ({{ Auth::user()->staff->department->ministry->code}})
-                            </div>
-                            <div>
-                                    {{ Auth::user()->staff->department->department_name }} ({{ Auth::user()->staff->department->department_code}})
-                            </div>                            
+                                <div>
+                                        {{ $organ->name}} ({{ $organ->code}})
+                                </div>
+                                <div>
+                                        {{ $userprofile->segment->name }} 
+                                </div>                              
                     </div>
 
 

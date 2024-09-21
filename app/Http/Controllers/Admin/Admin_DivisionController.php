@@ -88,7 +88,7 @@ class Admin_DivisionController extends Controller
 
     public function edit(Division $division)
     {
-        $departments = Department::orderBy('department_name', 'asc')->get();
+        $departments = Department::orderBy('name', 'asc')->get();
 
         return view('admin.divisions.edit', ['departments' => $departments, 'division' => $division]);
     }

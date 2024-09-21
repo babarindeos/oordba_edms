@@ -35,7 +35,7 @@
                         <div class="flex flex-col border-red-900 w-[80%] md:w-[60%] mt-4">
                             <button type="submit" class="border border-1 bg-red-400 py-4 px-4 text-white 
                                            hover:bg-red-500
-                                           rounded-md text-lg" style="font-family:'Lato';font-weight:500;">Delete Ministry</button>
+                                           rounded-md text-lg" style="font-family:'Lato';font-weight:500;">Delete Directorate</button>
                         </div>
                         
                     </form><!-- end of new Ministry form //-->
