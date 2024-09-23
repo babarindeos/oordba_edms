@@ -9,7 +9,7 @@
                     </div>
                     
                     <!-- search //-->
-                    <div class="flex flex-1 justify-end border border-0">
+                    <div class="flex flex-1 justify-end border-0">
                     
                         <input type="text" name="search" class="w-full md:w-4/5 border border-1 border-gray-400 bg-gray-50
                                     p-2 rounded-md 

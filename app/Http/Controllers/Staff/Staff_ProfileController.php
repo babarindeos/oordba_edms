@@ -8,6 +8,8 @@ use App\Models\Profile;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Staff;
 use App\Http\Classes\OrganClass;
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 
 class Staff_ProfileController extends Controller
@@ -213,5 +215,56 @@ class Staff_ProfileController extends Controller
         
 
         return view('staff.profile.user_profile', compact('userprofile', 'organ'));
+    }
+
+    public function change_password()
+    {
+        return view('staff.profile.change_password');
+    }
+
+    public function update_password(Request $request)
+    {
+        $formFields = $request->validate([
+            'current_password' => 'required',
+            'new_password' => 'required|min:6|confirmed',            
+        ]);
+
+        $current_user = Auth::user();
+
+        if (Hash::check($request->current_password, $current_user->password))
+        {
+            
+            $current_user->password = Hash::make($request->input('new_password'));
+            $updated = $current_user->save();
+            if ($updated)
+            {
+                $data = [
+                    'error' => true,
+                    'status' => 'success',
+                    'message' => 'Your Password has been successfully updated'
+                ];
+            }
+            else
+            {
+                $data = [
+                    'error' => true,
+                    'status' => 'fail',
+                    'message' => 'An error occurred updating your password'
+                ];
+
+            }
+        }
+        else
+        {
+            $data = [
+                'error' => true,
+                'status' => 'fail',
+                'message' => 'Sorr, your current password is incorrect'
+            ];
+        }
+
+        return redirect()->back()->with($data);
+
+
     }
 }

@@ -27,7 +27,7 @@ class Admin_DashboardController extends Controller
                                     ->join("staff", "users.id", "staff.user_id")
                                     ->join("departments", "staff.department_id", "departments.id")
                                     ->join("ministries", "departments.ministry_id", "ministries.id")
-                                    ->select("users.*", "staff.*", "departments.*", "ministries.*", "uploader")->groupBy("users.id")->get(); */
+                                    ->select("users.*", "staff.*", "departments.*", "ministries.*", "uploader")->groupBy("users.id")->get(); 
 
         $ministries_documents = DB::table("documents")
                                 ->join("users", "documents.uploader","=", "users.id")
@@ -110,12 +110,10 @@ class Admin_DashboardController extends Controller
             array_push($departments_staff_chart_data, $item);
        }
 
-       //dd($ministries_staff_chart_data);
-
-
+       //dd($ministries_staff_chart_data);       
         
 
-        return view('admin.dashboard')->with([
+         return view('admin.dashboard')->with([
             "documents_count" => $documents_count,
             "users_count" => $users_count,
             "staff_count" =>$staff_count,
@@ -125,6 +123,17 @@ class Admin_DashboardController extends Controller
             "departments_documents_chart_data" => $departments_documents_chart_data,
             "ministries_staff_chart_data" => $ministries_staff_chart_data,
             "departments_staff_chart_data" => $departments_staff_chart_data
+        ]); 
+
+    *****/
+
+
+        return view('admin.dashboard')->with([
+            "documents_count" => $documents_count,
+            "users_count" => $users_count,
+            "staff_count" =>$staff_count,
+            "workflows_count" => $workflows_count,
+            "departments_count" => $departments_count
         ]);
 
     }

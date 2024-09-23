@@ -41,10 +41,15 @@
 
             </div>
             <div class="flex flex-col justify-center md:border rounded-md md:w-[70%] py-2 px-4">
-                    <div class="flex justify-end px-4">
+                    <div class="flex justify-end px-4 space-x-2">
                             <a href="{{ route('staff.profile.myprofile.edit') }}" class="border px-4 py-1 rounded-md ring-0 
                                  border-gray-500 bg-gray-100 hover:shadow-md text-xs md:text-sm hover:font-semibold">
                                 Edit
+                            </a>
+
+                            <a href="{{ route('staff.profile.change_password') }}" class="border px-4 py-1 rounded-md ring-0 
+                                 border-gray-500 bg-gray-100 hover:shadow-md text-xs md:text-sm hover:font-semibold">
+                                Change Password
                             </a>
                     </div>
                     <div class="mb-4  mx-[10%] md:mx-0 ">

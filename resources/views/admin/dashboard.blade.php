@@ -14,46 +14,107 @@
         <!-- board //-->
         <section class="flex flex-row border border-0 py-1 mt-3">
                 <div class="flex flex-col md:flex-row mx-auto md:space-x-2 w-4/5 justify-center items-center">
+                    
+                    <!-- Document //-->
                     <div class="flex flex-col border border-1 border-yellow-500 
                                 w-full md:w-[20%] px-4 py-4 mt-1 rounded-md bg-yellow-500">
-                        <div class="text-white text-3xl">
-                            {{ number_format($documents_count)}}
-                        </div>
-                        <div class="text-sm text-white font-normal">
-                            Documents
-                        </div>
-                    </div>
+                                
+                            <div class="flex flex-row">
+                                    <div class="flex flex-col flex-1 w-3/4">
+                                        <div class="text-white text-3xl">
+                                            {{ number_format($documents_count)}}
+                                        </div>                            
+                                    
+                                        <div class="text-sm text-white font-normal">
+                                            Documents
+                                        </div>
+                                    </div>
+                                    <div class="w-1/4 flex justify-center items-center border-0">
+                                        <i class="fa-regular fa-file text-4xl text-white opacity-50 "></i>
+                                    </div>
 
+                            </div>
+                    </div>
+                    <!-- end of Document //-->
+
+
+                    <!-- Workflow //-->
                     <div class="flex flex-col border border-1 border-pink-500 
                                 w-full md:w-[20%] px-4 py-4 mt-1 rounded-md bg-pink-500">
-                        <div class="text-white text-3xl">
-                            {{ $workflows_count}}
-                        </div>
-                        <div class="text-sm text-white font-normal">
-                            Workflows
-                        </div>
+                                
+                            <div class="flex flex-row">
+                                    <div class="flex flex-col flex-1 w-3/4">
+                                        <div class="text-white text-3xl">
+                                            {{ number_format($workflows_count)}}
+                                        </div>                            
+                                    
+                                        <div class="text-sm text-white font-normal">
+                                            Workflows
+                                        </div>
+                                    </div>
+                                    <div class="w-1/4 flex justify-center items-center border-0">
+                                        
+                                        <i class="fa-solid fa-person-digging text-4xl text-white opacity-50 "></i>
+                                    </div>
+
+                            </div>
                     </div>
+                    <!-- end of Workflow //-->
 
 
+
+                    <!-- Staff //-->
                     <div class="flex flex-col border border-1 border-blue-500 
-                                w-full md:w-[20%] px-4 py-4 mt-1 rounded-md bg-blue-500">
-                        <div class="text-white text-3xl">
-                            {{ $staff_count}}
-                        </div>
-                        <div class="text-sm text-white">
-                            Staff
-                        </div>
-                    </div>
+                                        w-full md:w-[20%] px-4 py-4 mt-1 rounded-md bg-blue-500">
+                                        
+                            <div class="flex flex-row">
+                                    <div class="flex flex-col flex-1 w-3/4">
+                                        <div class="text-white text-3xl">
+                                            {{ number_format($staff_count)}}
+                                        </div>                            
+                                    
+                                        <div class="text-sm text-white font-normal">
+                                            Staff
+                                        </div>
+                                    </div>
+                                    <div class="w-1/4 flex justify-center items-center border-0">
+                                        
+                                        <i class="fa-solid fa-users text-4xl text-white opacity-50 "></i>
+                                    </div>
 
-                    <div class="flex flex-col border border-1 border-purple-500 
-                                w-full md:w-[20%] px-4 py-4 mt-1 rounded-md bg-purple-500">
-                        <div class="text-white text-3xl">
-                            {{ $departments_count}}
-                        </div>
-                        <div class="text-sm text-white">
-                            Departments
-                        </div>
+                            </div>
                     </div>
+                    <!-- end of Staff //-->
+
+
+                    <!-- Department //-->
+                    <div class="flex flex-col border border-1 border-purple-500 
+                                        w-full md:w-[20%] px-4 py-4 mt-1 rounded-md bg-purple-500">
+                                        
+                            <div class="flex flex-row">
+                                    <div class="flex flex-col flex-1 w-3/4">
+                                        <div class="text-white text-3xl">
+                                            {{ number_format($departments_count)}}
+                                        </div>                            
+                                    
+                                        <div class="text-sm text-white font-normal">
+                                            Departments
+                                        </div>
+                                    </div>
+                                    <div class="w-1/4 flex justify-center items-center border-0">
+                                        
+                                        <i class="fa-regular fa-building text-4xl text-white opacity-50 "></i>
+                                    </div>
+
+                            </div>
+                    </div>
+                    <!-- end of Departments //-->
+                    
+
+
+                    
+
+                    
 
                     
                 </div>
@@ -120,6 +181,9 @@
             
     </div>
 </x-admin-layout>
+
+
+{{-- 
 <script type="text/javascript">
     // Convert PHP array to a JSON object for JavaScript
     var ministriesDocumentsChartData = {!! json_encode($ministries_documents_chart_data) !!};
@@ -197,4 +261,4 @@
         
 
       }
-</script>
+</script> --}}

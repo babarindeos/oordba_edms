@@ -36,6 +36,8 @@ use App\Http\Controllers\Staff\Staff_ProfileController;
 
 use App\Http\Controllers\Staff\Staff_CategoryController;
 
+use App\Http\Controllers\PDFController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +53,10 @@ use App\Http\Controllers\Staff\Staff_CategoryController;
 Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
+
+
+Route::get('/generate-pdf', [PDFController::class, 'generatePDF']);
+
 
 Route::post('/', [Staff_AuthController::class, 'login'])->name('staff.auth.login');
 
@@ -103,7 +109,9 @@ Route::prefix('staff')->middleware(['auth', 'staff'])->group(function(){
     Route::post('/profile/myprofile/update_avatar', [Staff_ProfileController::class, 'update_avatar'])->name('staff.profile.myprofile.update_avatar');
     
     Route::get('/profile/user/{fileno}', [Staff_ProfileController::class, 'user_profile'])->name('staff.profile.user_profile');
-    
+    Route::get('/profile/change_password', [Staff_ProfileController::class, 'change_password'])->name('staff.profile.change_password');
+    Route::post('/profile/update_password', [Staff_ProfileController::class, 'update_password'])->name('staff.profile.update_password');
+
     // Categories
     Route::get('/categories/create', [Staff_CategoryController::class, 'create'])->name('staff.categories.create');
     Route::post('/categories/store', [Staff_CategoryController::class, 'store'])->name('staff.categories.store');
