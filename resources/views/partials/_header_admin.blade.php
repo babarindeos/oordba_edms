@@ -3,7 +3,7 @@
     
     
     <nav class="py-3 border-0">
-        <div class="max-w-7xl mx-auto px-2 sm:px-8 lg:px-0">
+        <div class="max-w-8xl mx-auto px-2 sm:px-8 lg:px-4">
             <div class="flex items-center justify-between h-16">
 
                 <!-- Logo -->
@@ -50,7 +50,19 @@
                                 </div>
                             </div>
                             <a  href='{{ route('admin.staff.index') }}' class="flex font-semibold items-center text-white hover:border-b-yellow-100 hover:border-b-4 mx-3 ">Users</a>
-                            <a  href='{{ route('admin.documents.index') }}' class="flex font-semibold items-center text-white hover:border-b-yellow-100 hover:border-b-4 mx-3 ">Documents</a>
+                            <div class="relative group">
+                                <button class="text-white px-1 py-2 rounded-md font-semibold">
+                                    Documents
+                                </button>
+                                <!-- Sub-menu -->
+                                <div class="absolute hidden group-hover:block bg-white text-gray-800 mt-0 py-2 shadow-lg">
+                                    <a href="{{ route('admin.admin_documents.index')}}" class="flex flex-row px-4 py-2 hover:bg-gray-200 hover:border-l-yellow-500 hover:border-l-4 pr-8">Admin Documents</a>
+                                    <a href="{{ route('admin.documents.index')}} " class="flex flex-row px-4 py-2 hover:bg-gray-200  hover:border-l-yellow-500 hover:border-l-4 pr-">Documents</a>
+                                    <a href="{{ route('admin.documents.index') }}" class="flex flex-row px-4 py-2 hover:bg-gray-200  hover:border-l-yellow-500 hover:border-l-4 pr-8">Requests</a>
+
+                                </div>
+                            </div>
+                            
                             <a  href='{{ route('admin.tracker.index') }}' class="flex font-semibold items-center text-white hover:border-b-yellow-100 hover:border-b-4 mx-3 ">Tracker</a>
                             <a  href='{{ route('admin.analytics.index')}}' class="flex font-semibold items-center text-white hover:border-b-yellow-100 hover:border-b-4 mx-3 ">Analytics</a>
                             <form action="{{ route('admin.auth.logout') }}" method="POST" class="flex items-center justify-center border-0">

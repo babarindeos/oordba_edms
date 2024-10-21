@@ -1,8 +1,8 @@
 <br/>
 <h2>Hi, {{ $fullname }}</h2>
-An account has been created for you by the Administrator on Ogun State Government Workflow (GoviFlow). 
-GoviFlow is the State Government's Platform for managing work processes across Ministries, Departments 
-and Agencies (MDAs).
+An account has been created for you by the Administrator on O-ORBDA EDMS. 
+O-ORBDA EDMS is a document management and workflow automation system across Directorates, Departments, Divisions, 
+Branches, Sections and Units.
 <br/><br/>
 Please find below your username and password to access the application.
 
